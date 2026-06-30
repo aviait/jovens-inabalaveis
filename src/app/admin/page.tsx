@@ -347,7 +347,7 @@ export default async function AdminPage() {
                       </td>
                       <td style={{ ...td, fontWeight: 600, color: '#111' }}>{s.fullName}</td>
                       <td style={{ ...td, color: '#6b7280' }}>
-                        {s.birthDate.toLocaleDateString('pt-BR')}
+                        {s.birthDate.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
                       </td>
                       <td style={{ ...td, color: '#374151' }}>{s.church}</td>
                       <td style={{ ...td, maxWidth: 220 }}>
@@ -393,7 +393,7 @@ export default async function AdminPage() {
                         {MEAL_SCENARIO_LABELS[s.mealScenario as (typeof MEAL_SCENARIOS)[number]]}
                       </td>
                       <td style={{ ...td, whiteSpace: 'nowrap', color: '#9ca3af', fontSize: 11 }}>
-                        {s.createdAt.toLocaleString('pt-BR')}
+                        {s.createdAt.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
                       </td>
                     </tr>
                   ))}
