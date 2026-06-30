@@ -3,6 +3,9 @@ import { cookies } from 'next/headers';
 
 export interface SessionData {
   isAdmin: boolean;
+  userId?: string;
+  role?: string;   // "super_admin" | "congregacao"
+  church?: string; // apenas role congregacao
 }
 
 const sessionOptions: SessionOptions = {

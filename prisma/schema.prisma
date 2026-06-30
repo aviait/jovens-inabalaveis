@@ -28,3 +28,15 @@ model Submission {
   @@index([createdAt(sort: Desc)])
   @@map("submissions")
 }
+
+model User {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now()) @db.Timestamptz
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("congregacao") // "super_admin" | "congregacao"
+  church       String?  // null = acesso a todas
+
+  @@map("users")
+}

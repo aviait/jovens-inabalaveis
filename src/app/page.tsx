@@ -450,9 +450,9 @@ export default function HomePage() {
 
       {/* ── 1ª EDIÇÃO ─────────────────────────────────────── */}
       <section style={{ background: '#001f4d', padding: '80px 24px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+        <div style={{ maxWidth: 1060, margin: '0 auto' }}>
           {/* Cabeçalho contextual */}
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+          <div style={{ textAlign: 'center', marginBottom: 52 }}>
             <p
               style={{
                 fontSize: 12,
@@ -472,98 +472,87 @@ export default function HomePage() {
             </h2>
             <p style={{ fontSize: 16, color: '#7290BA', margin: '0 auto', maxWidth: 560, lineHeight: 1.7 }}>
               No ano passado fizemos um dia inteiro falando sobre{' '}
-              <strong style={{ color: '#FACAA5' }}>Desmascarando Ideologias</strong>. Ficou gravado. Dá pra
-              assistir agora — de graça, no YouTube.
+              <strong style={{ color: '#FACAA5' }}>Desmascarando Ideologias</strong>. Ficou gravado — de graça, no
+              YouTube. Cada turno tem a live completa e as partes separadas.
             </p>
           </div>
 
-          {/* Grid de 6 vídeos separados por turno */}
-          <div
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}
-          >
-            {[
-              { badge: 'MANHÃ · Parte 1', videoId: 'TbsNadl45jA', url: 'https://www.youtube.com/watch?v=TbsNadl45jA&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=1' },
-              { badge: 'MANHÃ · Parte 2', videoId: 'eAHTYnvxaKg', url: 'https://www.youtube.com/watch?v=eAHTYnvxaKg&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=2' },
-              { badge: 'TARDE · Parte 1', videoId: 'sM5CExmx8F8', url: 'https://www.youtube.com/watch?v=sM5CExmx8F8&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=3' },
-              { badge: 'TARDE · Parte 2', videoId: 'TM6bUyJAbEI', url: 'https://www.youtube.com/watch?v=TM6bUyJAbEI&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=4' },
-              { badge: 'NOITE · Parte 1', videoId: 'aqrmmsdB8XA', url: 'https://www.youtube.com/watch?v=aqrmmsdB8XA&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=5' },
-              { badge: 'NOITE · Parte 2', videoId: '6wdwdXMHyNU', url: 'https://www.youtube.com/watch?v=6wdwdXMHyNU&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=6' },
-            ].map(({ badge, videoId, url }) => (
-              <a
-                key={videoId}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: 'none', display: 'block' }}
-              >
+          {/* 3 blocos por turno */}
+          {[
+            {
+              turno: 'Manhã',
+              time: '09h – 12h',
+              live: { videoId: '90Bv3QAjNPo', url: 'https://www.youtube.com/watch?v=90Bv3QAjNPo&t=1914s' },
+              partes: [
+                { label: 'Parte 1', videoId: 'TbsNadl45jA', url: 'https://www.youtube.com/watch?v=TbsNadl45jA&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=1' },
+                { label: 'Parte 2', videoId: 'eAHTYnvxaKg', url: 'https://www.youtube.com/watch?v=eAHTYnvxaKg&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=2' },
+              ],
+            },
+            {
+              turno: 'Tarde',
+              time: '14h – 17h',
+              live: { videoId: 'dIxQOvfDYkg', url: 'https://www.youtube.com/live/dIxQOvfDYkg' },
+              partes: [
+                { label: 'Parte 1', videoId: 'sM5CExmx8F8', url: 'https://www.youtube.com/watch?v=sM5CExmx8F8&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=3' },
+                { label: 'Parte 2', videoId: 'TM6bUyJAbEI', url: 'https://www.youtube.com/watch?v=TM6bUyJAbEI&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=4' },
+              ],
+            },
+            {
+              turno: 'Noite',
+              time: '19h – 21h30',
+              live: { videoId: 'aX-XU7l0ovQ', url: 'https://www.youtube.com/watch?v=aX-XU7l0ovQ&t=1343s' },
+              partes: [
+                { label: 'Parte 1', videoId: 'aqrmmsdB8XA', url: 'https://www.youtube.com/watch?v=aqrmmsdB8XA&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=5' },
+                { label: 'Parte 2', videoId: '6wdwdXMHyNU', url: 'https://www.youtube.com/watch?v=6wdwdXMHyNU&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=6' },
+              ],
+            },
+          ].map(({ turno, time, live, partes }) => (
+            <div key={turno} style={{ marginBottom: 48 }}>
+              {/* Título do turno */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
                 <div
                   style={{
-                    borderRadius: 12,
-                    overflow: 'hidden',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    background: 'rgba(255,255,255,0.04)',
+                    background: '#EB6B15',
+                    color: '#fff',
+                    fontSize: 11,
+                    fontWeight: 700,
+                    letterSpacing: 2,
+                    padding: '4px 12px',
+                    borderRadius: 6,
+                    textTransform: 'uppercase',
                   }}
                 >
-                  {/* Thumbnail */}
-                  <div style={{ position: 'relative' }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-                      alt={`${badge} — 1ª edição`}
-                      style={{ width: '100%', display: 'block', aspectRatio: '16/9', objectFit: 'cover' }}
-                    />
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        background: 'rgba(0,0,0,0.3)',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: 52,
-                          height: 52,
-                          borderRadius: '50%',
-                          background: '#EB6B15',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 4px 16px rgba(235,107,21,0.5)',
-                        }}
-                      >
-                        <span style={{ fontSize: 18, marginLeft: 4 }}>▶</span>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: 10,
-                        left: 10,
-                        background: '#EB6B15',
-                        color: '#fff',
-                        fontSize: 10,
-                        fontWeight: 700,
-                        letterSpacing: 1,
-                        padding: '3px 8px',
-                        borderRadius: 5,
-                        textTransform: 'uppercase',
-                      }}
-                    >
-                      {badge}
-                    </div>
-                  </div>
-                  <div style={{ padding: '12px 16px' }}>
-                    <span style={{ fontSize: 13, color: '#EB6B15', fontWeight: 700 }}>
-                      Assistir no YouTube →
-                    </span>
-                  </div>
+                  {turno}
                 </div>
-              </a>
-            ))}
-          </div>
+                <span style={{ fontSize: 14, color: '#7290BA' }}>{time}</span>
+                <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.08)' }} />
+              </div>
+
+              {/* Live + Partes em grid */}
+              <div
+                style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12 }}
+              >
+                {/* Card da live completa — destaque */}
+                <VideoCard
+                  url={live.url}
+                  videoId={live.videoId}
+                  label="Live Completa"
+                  alt={`${turno} — Live completa · 1ª edição`}
+                  featured
+                />
+                {/* Partes */}
+                {partes.map((p) => (
+                  <VideoCard
+                    key={p.videoId}
+                    url={p.url}
+                    videoId={p.videoId}
+                    label={p.label}
+                    alt={`${turno} ${p.label} · 1ª edição`}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
 
           {/* Link playlist */}
           <div style={{ textAlign: 'center', marginTop: 36 }}>
@@ -671,5 +660,89 @@ export default function HomePage() {
         </p>
       </footer>
     </div>
+  );
+}
+
+function VideoCard({
+  url,
+  videoId,
+  label,
+  alt,
+  featured = false,
+}: {
+  url: string;
+  videoId: string;
+  label: string;
+  alt: string;
+  featured?: boolean;
+}) {
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+      <div
+        style={{
+          borderRadius: 12,
+          overflow: 'hidden',
+          border: featured ? '2px solid rgba(235,107,21,0.5)' : '1px solid rgba(255,255,255,0.08)',
+          background: featured ? 'rgba(235,107,21,0.07)' : 'rgba(255,255,255,0.03)',
+        }}
+      >
+        <div style={{ position: 'relative' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+            alt={alt}
+            style={{ width: '100%', display: 'block', aspectRatio: '16/9', objectFit: 'cover' }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(0,0,0,0.28)',
+            }}
+          >
+            <div
+              style={{
+                width: featured ? 60 : 48,
+                height: featured ? 60 : 48,
+                borderRadius: '50%',
+                background: '#EB6B15',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 16px rgba(235,107,21,0.5)',
+              }}
+            >
+              <span style={{ fontSize: featured ? 22 : 17, marginLeft: 4 }}>▶</span>
+            </div>
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: 10,
+              background: featured ? '#EB6B15' : 'rgba(0,0,0,0.6)',
+              color: '#fff',
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: 1,
+              padding: '3px 8px',
+              borderRadius: 5,
+              textTransform: 'uppercase',
+              border: featured ? 'none' : '1px solid rgba(255,255,255,0.2)',
+            }}
+          >
+            {label}
+          </div>
+        </div>
+        <div style={{ padding: '10px 14px' }}>
+          <span style={{ fontSize: 12, color: featured ? '#EB6B15' : '#7290BA', fontWeight: 600 }}>
+            Assistir no YouTube →
+          </span>
+        </div>
+      </div>
+    </a>
   );
 }

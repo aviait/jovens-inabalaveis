@@ -353,6 +353,9 @@ const F = {
     fontSize: 15,
     outline: 'none',
     marginTop: 2,
+    width: '100%',
+    boxSizing: 'border-box' as const,
+    background: '#fff',
   },
   checkboxLabel: {
     display: 'flex' as const,

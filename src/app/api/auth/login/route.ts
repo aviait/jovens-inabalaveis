@@ -1,14 +1,15 @@
-import { timingSafeEqual } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
+import { verifyPassword } from '@/lib/auth';
+import { db } from '@/lib/db';
 import { getSession } from '@/lib/session';
 
 const loginSchema = z.object({
+  email: z.string().email(),
   password: z.string().min(1),
 });
 
-// rate limit em memória: 10 tentativas por IP / 15 min
 const attempts = new Map<string, { count: number; resetAt: number }>();
 const MAX_ATTEMPTS = 10;
 const WINDOW_MS = 15 * 60 * 1000;
@@ -23,16 +24,6 @@ function checkRateLimit(ip: string): boolean {
   if (entry.count >= MAX_ATTEMPTS) return false;
   entry.count++;
   return true;
-}
-
-function safeCompare(a: string, b: string): boolean {
-  const bufA = Buffer.from(a);
-  const bufB = Buffer.from(b);
-  if (bufA.length !== bufB.length) {
-    timingSafeEqual(bufA, bufA); // mantém tempo constante
-    return false;
-  }
-  return timingSafeEqual(bufA, bufB);
 }
 
 export async function POST(req: NextRequest) {
@@ -57,13 +48,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ code: 'VALIDATION_ERROR', message: 'Dados inválidos.' }, { status: 400 });
   }
 
-  const adminPassword = process.env.ADMIN_PASSWORD ?? '';
-  if (!safeCompare(parsed.data.password, adminPassword)) {
-    return NextResponse.json({ code: 'UNAUTHORIZED', message: 'Senha incorreta.' }, { status: 401 });
+  const user = await db.user.findUnique({ where: { email: parsed.data.email } });
+  if (!user || !(await verifyPassword(parsed.data.password, user.passwordHash))) {
+    return NextResponse.json({ code: 'UNAUTHORIZED', message: 'E-mail ou senha incorretos.' }, { status: 401 });
   }
 
   const session = await getSession();
   session.isAdmin = true;
+  session.userId = user.id;
+  session.role = user.role;
+  session.church = user.church ?? undefined;
   await session.save();
 
   return NextResponse.json({ ok: true });

@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// protege /admin e sub-rotas, exceto /admin/login
+// protege /admin (exato) e /admin/sub-rotas, exceto /admin/login
 export const config = {
-  matcher: ['/admin/((?!login).*)'],
+  matcher: ['/admin', '/admin/((?!login).*)'],
 };
