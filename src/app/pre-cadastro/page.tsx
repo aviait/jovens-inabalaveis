@@ -199,10 +199,11 @@ export default function FormPage() {
           {step === 2 && (
             <section>
               <h1 style={{ fontSize: 22, fontWeight: 800, color: '#003D8F', margin: '0 0 8px' }}>
-                Escolha dos Temas
+                Quais temas você quer ver?
               </h1>
               <p style={{ fontSize: 14, color: '#6b7280', margin: '0 0 20px' }}>
-                Selecione até <strong>6 temas</strong> que você considera mais urgentes.{' '}
+                Estes são possíveis temas. Escolha até <strong>6</strong> que você considera mais
+                urgentes — sua resposta ajuda a definir a grade.{' '}
                 <span style={{ color: '#EB6B15', fontWeight: 700 }}>{topics.length}/6</span>
               </p>
               {TOPICS.map((topic) => (

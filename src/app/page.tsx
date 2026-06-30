@@ -379,10 +379,11 @@ export default function HomePage() {
                 margin: '0 0 12px',
               }}
             >
-              Temas abordados
+              Possíveis temas
             </h2>
             <p style={{ fontSize: 15, color: '#6b7280', margin: 0 }}>
-              Na inscrição, você ajuda a definir quais temas abordaremos com mais profundidade.
+              No pré-cadastro, você nos diz quais temas são mais urgentes pra você. A grade final será
+              definida a partir dessas respostas.
             </p>
           </div>
 
@@ -599,8 +600,8 @@ export default function HomePage() {
             conosco!
           </h2>
           <p style={{ fontSize: 16, color: 'rgba(251,251,252,0.7)', margin: '0 0 40px', lineHeight: 1.8 }}>
-            Preencha o formulário de inscrição e nos ajude a organizar
-            <br />o melhor seminário possível para você.
+            Faça seu pré-cadastro e nos ajude a entender quem quer participar
+            <br />e o que espera do evento — sem compromisso.
           </p>
           <Link
             href="/pre-cadastro"
