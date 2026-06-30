@@ -201,10 +201,9 @@ export default function FormPage() {
             maxWidth: 620,
             width: '100%',
             boxShadow: '0 20px 60px rgba(0,0,0,0.45)',
+            borderTop: '4px solid #EB6B15',
           }}
         >
-          {/* Faixa laranja de acento */}
-          <div style={{ height: 4, background: 'linear-gradient(90deg, #EB6B15 0%, #f5932d 100%)', borderRadius: '16px 16px 0 0' }} />
 
           <div style={{ padding: '32px 36px 40px' }}>
             {/* Barra de progresso */}
