@@ -304,7 +304,7 @@ export default function HomePage() {
               marginBottom: 16,
             }}
           >
-            Sobre o Seminário
+            O seminário
           </p>
           <h2
             style={{
@@ -409,7 +409,7 @@ export default function HomePage() {
                 marginBottom: 12,
               }}
             >
-              Conteúdo
+              Os temas
             </p>
             <h2
               style={{
@@ -422,8 +422,7 @@ export default function HomePage() {
               Possíveis temas
             </h2>
             <p style={{ fontSize: 15, color: '#6b7280', margin: 0 }}>
-              A grade ainda não está fechada. No pré-cadastro você vota nos temas que acha mais urgente — e a
-              programação vai ser definida com base nisso.
+              A grade ainda não foi fechada. Você vota no pré-cadastro e a programação sai com base nas respostas.
             </p>
           </div>
 
@@ -629,7 +628,7 @@ export default function HomePage() {
               marginBottom: 16,
             }}
           >
-            Participação gratuita
+            É de graça
           </p>
           <h2
             style={{

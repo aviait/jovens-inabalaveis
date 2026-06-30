@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   CHURCHES,
@@ -32,6 +32,9 @@ export default function FormPage() {
   const [mealScenario, setMealScenario] = useState('');
   const [focusField, setFocusField] = useState<string | null>(null);
   const [step1Touched, setStep1Touched] = useState(false);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const birthRef = useRef<HTMLInputElement>(null);
+  const churchRef = useRef<HTMLInputElement>(null);
 
   function focusStyle(field: string): React.CSSProperties {
     return focusField === field
@@ -243,6 +246,7 @@ export default function FormPage() {
                 <label style={F.label}>
                   Nome Completo
                   <input
+                    ref={nameRef}
                     style={{
                       ...F.input,
                       ...focusStyle('name'),
@@ -263,7 +267,12 @@ export default function FormPage() {
                 <label style={F.label}>
                   Data de Nascimento
                   <input
-                    style={{ ...F.input, ...focusStyle('birth') }}
+                    ref={birthRef}
+                    style={{
+                      ...F.input,
+                      ...focusStyle('birth'),
+                      ...(step1Touched && !birthDateValid ? { borderColor: '#dc2626' } : {}),
+                    }}
                     type="text"
                     inputMode="numeric"
                     value={birthDate}
@@ -273,18 +282,34 @@ export default function FormPage() {
                     onFocus={() => setFocusField('birth')}
                     onBlur={() => setFocusField(null)}
                   />
+                  {step1Touched && !birthDateValid && !birthDateError && (
+                    <span style={{ fontSize: 12, color: '#dc2626', fontWeight: 500, marginTop: 2 }}>
+                      {birthDate.length === 0 ? 'Informe sua data de nascimento.' : 'Complete a data (DD/MM/AAAA).'}
+                    </span>
+                  )}
                   {birthDateError && (
                     <span style={{ fontSize: 12, color: '#dc2626', fontWeight: 500, marginTop: 2 }}>
                       {birthDateError}
                     </span>
                   )}
                 </label>
-                <ChurchCombobox value={church} onChange={setChurch} touched={step1Touched} />
+                <ChurchCombobox
+                  value={church}
+                  onChange={setChurch}
+                  touched={step1Touched}
+                  inputRef={churchRef}
+                />
                 <button
                   style={{ ...F.btn, width: '100%', marginTop: 4 }}
                   onClick={() => {
                     setStep1Touched(true);
-                    if (fullName.trim() && birthDateValid && church.trim()) setStep(2);
+                    if (fullName.trim() && birthDateValid && church.trim()) {
+                      setStep(2);
+                      return;
+                    }
+                    if (!fullName.trim()) nameRef.current?.focus();
+                    else if (!birthDateValid) birthRef.current?.focus();
+                    else if (!church.trim()) churchRef.current?.focus();
                   }}
                 >
                   Próximo →
@@ -438,31 +463,36 @@ function ChurchCombobox({
   value,
   onChange,
   touched = false,
+  inputRef,
 }: {
   value: string;
   onChange: (v: string) => void;
   touched?: boolean;
+  inputRef?: React.RefObject<HTMLInputElement | null>;
 }) {
   const [query, setQuery] = useState(value);
   const [open, setOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const listRef = useRef<HTMLDivElement | null>(null);
 
   const filtered = query.trim()
     ? CHURCHES.filter((c) => c.toLowerCase().includes(query.trim().toLowerCase()))
     : CHURCHES;
 
-  const isCustom = query.trim() && !CHURCHES.some((c) => c.toLowerCase() === query.trim().toLowerCase());
+  const isCustom = !!(query.trim() && !CHURCHES.some((c) => c.toLowerCase() === query.trim().toLowerCase()));
 
   function select(option: string) {
     setQuery(option);
     onChange(option);
     setOpen(false);
+    setHighlightedIndex(-1);
   }
 
   function handleBlur() {
     closeTimer.current = setTimeout(() => {
       setOpen(false);
-      // confirma valor digitado mesmo se não estiver na lista
+      setHighlightedIndex(-1);
       if (query.trim()) onChange(query.trim());
     }, 150);
   }
@@ -472,6 +502,38 @@ function ChurchCombobox({
     setOpen(true);
   }
 
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (!open) { setOpen(true); setHighlightedIndex(0); return; }
+      if (filtered.length > 0) setHighlightedIndex((i) => (i + 1) % filtered.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!open) { setOpen(true); setHighlightedIndex(filtered.length - 1); return; }
+      if (filtered.length > 0) setHighlightedIndex((i) => (i - 1 + filtered.length) % filtered.length);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (!open) { setOpen(true); return; }
+      if (filtered.length > 0 && highlightedIndex >= 0 && highlightedIndex < filtered.length) {
+        select(filtered[highlightedIndex]!);
+      } else if (filtered.length > 0 && highlightedIndex === -1) {
+        select(filtered[0]!);
+      } else if (filtered.length === 0 && isCustom) {
+        select(query.trim());
+      }
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      setOpen(false);
+      setHighlightedIndex(-1);
+    }
+  }
+
+  useEffect(() => {
+    if (highlightedIndex < 0 || !listRef.current) return;
+    const items = listRef.current.querySelectorAll('[data-opt]');
+    (items[highlightedIndex] as HTMLElement | undefined)?.scrollIntoView({ block: 'nearest' });
+  }, [highlightedIndex]);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 20 }}>
       <span style={{ fontSize: 14, fontWeight: 600, color: '#001d4d' }}>
@@ -479,6 +541,7 @@ function ChurchCombobox({
       </span>
       <div style={{ position: 'relative' }}>
         <input
+          ref={inputRef}
           type="text"
           style={{
             ...F.input,
@@ -495,13 +558,14 @@ function ChurchCombobox({
           spellCheck={false}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
           onChange={(e) => {
             setQuery(e.target.value);
-            onChange(''); // invalida até selecionar
+            onChange('');
             setOpen(true);
+            setHighlightedIndex(-1);
           }}
         />
-        {/* Ícone seta */}
         <span
           style={{
             position: 'absolute',
@@ -519,6 +583,7 @@ function ChurchCombobox({
 
         {open && (
           <div
+            ref={listRef}
             style={{
               position: 'absolute',
               top: 'calc(100% + 4px)',
@@ -535,12 +600,13 @@ function ChurchCombobox({
             } as React.CSSProperties}
           >
             {filtered.length > 0 ? (
-              filtered.map((c) => (
+              filtered.map((c, i) => (
                 <button
                   key={c}
                   type="button"
+                  data-opt=""
                   onMouseDown={(e) => {
-                    e.preventDefault(); // evita blur antes do click
+                    e.preventDefault();
                     select(c);
                   }}
                   style={{
@@ -549,9 +615,9 @@ function ChurchCombobox({
                     textAlign: 'left',
                     padding: '12px 16px',
                     fontSize: 14,
-                    color: value === c ? '#003D8F' : '#374151',
-                    fontWeight: value === c ? 700 : 400,
-                    background: value === c ? '#EEF2FF' : 'transparent',
+                    color: i === highlightedIndex || value === c ? '#003D8F' : '#374151',
+                    fontWeight: i === highlightedIndex || value === c ? 700 : 400,
+                    background: i === highlightedIndex ? '#EEF2FF' : value === c ? '#f0f4ff' : 'transparent',
                     border: 'none',
                     borderBottom: '1px solid #f3f4f6',
                     cursor: 'pointer',
