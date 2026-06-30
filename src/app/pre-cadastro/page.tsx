@@ -31,6 +31,7 @@ export default function FormPage() {
   const [freeMealSessions, setFreeMealSessions] = useState<string[]>([]);
   const [mealScenario, setMealScenario] = useState('');
   const [focusField, setFocusField] = useState<string | null>(null);
+  const [step1Touched, setStep1Touched] = useState(false);
 
   function focusStyle(field: string): React.CSSProperties {
     return focusField === field
@@ -59,13 +60,21 @@ export default function FormPage() {
     return d;
   })();
 
-  const minBirthDate = (() => {
-    const d = new Date();
-    d.setFullYear(d.getFullYear() - 10);
-    return d;
+  const birthDateError = (() => {
+    if (!parsedBirth || birthDate.length < 10) return null;
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    if (parsedBirth > now) return '👀 Você ainda não nasceu! Volta quando aparecer por aqui.';
+    const ago100 = new Date(now);
+    ago100.setFullYear(now.getFullYear() - 100);
+    if (parsedBirth < ago100) return 'Hmm, mais de 100 anos? Confere a data aí.';
+    const ago10 = new Date(now);
+    ago10.setFullYear(now.getFullYear() - 10);
+    if (parsedBirth > ago10) return 'Deve ter pelo menos 10 anos para participar.';
+    return null;
   })();
 
-  const birthDateValid = !!parsedBirth && parsedBirth <= minBirthDate;
+  const birthDateValid = birthDate.length === 10 && !!parsedBirth && birthDateError === null;
 
   function toggleTopic(topic: string) {
     setTopics((prev) =>
@@ -234,13 +243,22 @@ export default function FormPage() {
                 <label style={F.label}>
                   Nome Completo
                   <input
-                    style={{ ...F.input, ...focusStyle('name') }}
+                    style={{
+                      ...F.input,
+                      ...focusStyle('name'),
+                      ...(step1Touched && !fullName.trim() ? { borderColor: '#dc2626' } : {}),
+                    }}
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Seu nome completo"
                     onFocus={() => setFocusField('name')}
                     onBlur={() => setFocusField(null)}
                   />
+                  {step1Touched && !fullName.trim() && (
+                    <span style={{ fontSize: 12, color: '#dc2626', fontWeight: 500, marginTop: 2 }}>
+                      Informe seu nome completo.
+                    </span>
+                  )}
                 </label>
                 <label style={F.label}>
                   Data de Nascimento
@@ -255,17 +273,19 @@ export default function FormPage() {
                     onFocus={() => setFocusField('birth')}
                     onBlur={() => setFocusField(null)}
                   />
-                  {birthDate.length === 10 && !birthDateValid && (
+                  {birthDateError && (
                     <span style={{ fontSize: 12, color: '#dc2626', fontWeight: 500, marginTop: 2 }}>
-                      {!parsedBirth ? 'Data inválida.' : 'Deve ter pelo menos 10 anos.'}
+                      {birthDateError}
                     </span>
                   )}
                 </label>
-                <ChurchCombobox value={church} onChange={setChurch} />
+                <ChurchCombobox value={church} onChange={setChurch} touched={step1Touched} />
                 <button
-                  style={F.btn}
-                  disabled={!fullName.trim() || !birthDateValid || !church.trim()}
-                  onClick={() => setStep(2)}
+                  style={{ ...F.btn, width: '100%', marginTop: 4 }}
+                  onClick={() => {
+                    setStep1Touched(true);
+                    if (fullName.trim() && birthDateValid && church.trim()) setStep(2);
+                  }}
                 >
                   Próximo →
                 </button>
@@ -414,7 +434,15 @@ export default function FormPage() {
   );
 }
 
-function ChurchCombobox({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+function ChurchCombobox({
+  value,
+  onChange,
+  touched = false,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  touched?: boolean;
+}) {
   const [query, setQuery] = useState(value);
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -455,7 +483,7 @@ function ChurchCombobox({ value, onChange }: { value: string; onChange: (v: stri
           style={{
             ...F.input,
             paddingRight: 36,
-            borderColor: open ? '#003D8F' : '#d1d5db',
+            borderColor: open ? '#003D8F' : touched && !value.trim() ? '#dc2626' : '#d1d5db',
             boxShadow: open ? '0 0 0 3px rgba(0,61,143,0.12)' : 'none',
             outline: 'none',
           }}
@@ -564,6 +592,11 @@ function ChurchCombobox({ value, onChange }: { value: string; onChange: (v: stri
         )}
       </div>
 
+      {touched && !value.trim() && (
+        <span style={{ fontSize: 12, color: '#dc2626', fontWeight: 500 }}>
+          Informe sua congregação ou igreja local.
+        </span>
+      )}
       {value && !CHURCHES.some((c) => c === value) && (
         <span style={{ fontSize: 12, color: '#6b7280' }}>
           Congregação não listada — será salva como informada.
