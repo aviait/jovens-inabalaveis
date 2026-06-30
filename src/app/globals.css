@@ -1,0 +1,17 @@
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+
+/* Scroll hint animação */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+.scroll-hint { animation: scrollBounce 1.8s ease-in-out infinite; }
+
+/* Responsividade */
+@media (max-width: 640px) {
+  .hero-cta-row { flex-direction: column !important; align-items: stretch !important; }
+  .hero-cta-row a { text-align: center; }
+  .hero-info-row { gap: 20px !important; }
+  .nav-inner { padding: 14px 16px !important; }
+}

@@ -57,6 +57,7 @@ export default function HomePage() {
 
         {/* nav */}
         <nav
+          className="nav-inner"
           style={{
             padding: '20px 32px',
             display: 'flex',
@@ -187,7 +188,7 @@ export default function HomePage() {
             <strong style={{ color: '#FACAA5' }}>gratuito e aberto a todos</strong>.
           </p>
 
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div className="hero-cta-row" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link
               href="/pre-cadastro"
               style={{
@@ -202,7 +203,7 @@ export default function HomePage() {
                 boxShadow: '0 4px 24px rgba(235,107,21,0.4)',
               }}
             >
-              Quero participar →
+              Fazer meu pré-cadastro →
             </Link>
             <a
               href="#sobre"
@@ -217,12 +218,13 @@ export default function HomePage() {
                 border: '1px solid rgba(255,255,255,0.15)',
               }}
             >
-              Saiba mais
+              Ver mais
             </a>
           </div>
 
           {/* info row */}
           <div
+            className="hero-info-row"
             style={{ display: 'flex', gap: 32, marginTop: 56, flexWrap: 'wrap', justifyContent: 'center' }}
           >
             {[
@@ -249,11 +251,28 @@ export default function HomePage() {
         </div>
 
         {/* scroll hint */}
-        <div
-          style={{ position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)', zIndex: 1 }}
+        <a
+          href="#sobre"
+          className="scroll-hint"
+          style={{
+            position: 'absolute',
+            bottom: 28,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 4,
+            textDecoration: 'none',
+          }}
         >
-          <div style={{ width: 1, height: 40, background: 'rgba(255,255,255,0.2)', margin: '0 auto' }} />
-        </div>
+          <span style={{ fontSize: 11, letterSpacing: 2, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>
+            Role para baixo
+          </span>
+          <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.25)', margin: '0 auto' }} />
+          <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)' }}>↓</span>
+        </a>
       </section>
 
       {/* ── SOBRE ─────────────────────────────────────────── */}
@@ -416,6 +435,7 @@ export default function HomePage() {
       {/* ── 1ª EDIÇÃO ─────────────────────────────────────── */}
       <section style={{ background: '#001f4d', padding: '80px 24px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          {/* Cabeçalho contextual */}
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <p
               style={{
@@ -427,36 +447,47 @@ export default function HomePage() {
                 marginBottom: 12,
               }}
             >
-              1ª Edição
+              Já rolou uma vez
             </p>
-            <h2 style={{ fontSize: 'clamp(24px, 4vw, 38px)', fontWeight: 900, color: '#FBFBFC', margin: 0 }}>
-              Reveja o que aconteceu
+            <h2 style={{ fontSize: 'clamp(24px, 4vw, 38px)', fontWeight: 900, color: '#FBFBFC', margin: '0 0 16px' }}>
+              A 1ª edição foi incrível.
+              <br />
+              <span style={{ color: '#EB6B15' }}>A 2ª vai ser ainda maior.</span>
             </h2>
-            <p style={{ fontSize: 15, color: '#7290BA', marginTop: 12 }}>
-              A primeira edição ficou gravada. Assista na íntegra e se prepare para a próxima.
+            <p style={{ fontSize: 16, color: '#7290BA', margin: '0 auto', maxWidth: 560, lineHeight: 1.7 }}>
+              No ano passado fizemos um dia inteiro falando sobre{' '}
+              <strong style={{ color: '#FACAA5' }}>Desmascarando Ideologias</strong>. Ficou gravado. Dá pra
+              assistir agora — de graça, no YouTube.
             </p>
           </div>
 
+          {/* Cards dos 3 turnos */}
           <div
             style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}
           >
             {[
               {
                 label: 'MANHÃ',
+                time: '09h – 12h',
+                desc: 'Abertura e primeiro bloco de ensino',
                 videoId: '90Bv3QAjNPo',
                 url: 'https://www.youtube.com/watch?v=90Bv3QAjNPo&t=1914s',
               },
               {
                 label: 'TARDE',
+                time: '14h – 17h',
+                desc: 'Sessões temáticas e debate',
                 videoId: 'dIxQOvfDYkg',
                 url: 'https://www.youtube.com/live/dIxQOvfDYkg',
               },
               {
                 label: 'NOITE',
+                time: '19h – 21h30',
+                desc: 'Encerramento e reflexão final',
                 videoId: 'aX-XU7l0ovQ',
                 url: 'https://www.youtube.com/watch?v=aX-XU7l0ovQ&t=1343s',
               },
-            ].map(({ label, videoId, url }) => (
+            ].map(({ label, time, desc, videoId, url }) => (
               <a
                 key={label}
                 href={url}
@@ -466,19 +497,21 @@ export default function HomePage() {
               >
                 <div
                   style={{
-                    borderRadius: 12,
+                    borderRadius: 14,
                     overflow: 'hidden',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    transition: 'transform 0.2s',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    background: 'rgba(255,255,255,0.04)',
                   }}
                 >
+                  {/* Thumbnail */}
                   <div style={{ position: 'relative' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-                      alt={`Sessão da ${label}`}
+                      alt={`Sessão da ${label} — 1ª edição`}
                       style={{ width: '100%', display: 'block', aspectRatio: '16/9', objectFit: 'cover' }}
                     />
+                    {/* Overlay escuro + botão play */}
                     <div
                       style={{
                         position: 'absolute',
@@ -486,63 +519,85 @@ export default function HomePage() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        background: 'rgba(0,0,0,0.3)',
+                        background: 'rgba(0,0,0,0.35)',
                       }}
                     >
                       <div
                         style={{
-                          width: 56,
-                          height: 56,
+                          width: 60,
+                          height: 60,
                           borderRadius: '50%',
                           background: '#EB6B15',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
+                          boxShadow: '0 4px 20px rgba(235,107,21,0.5)',
                         }}
                       >
-                        <span style={{ fontSize: 20, marginLeft: 3 }}>▶</span>
+                        <span style={{ fontSize: 22, marginLeft: 4 }}>▶</span>
                       </div>
                     </div>
-                  </div>
-                  <div style={{ padding: '16px 18px', background: 'rgba(255,255,255,0.05)' }}>
-                    <span
+                    {/* Badge do turno */}
+                    <div
                       style={{
+                        position: 'absolute',
+                        top: 12,
+                        left: 12,
+                        background: '#EB6B15',
+                        color: '#fff',
                         fontSize: 11,
                         fontWeight: 700,
                         letterSpacing: 2,
-                        color: '#EB6B15',
+                        padding: '4px 10px',
+                        borderRadius: 6,
                         textTransform: 'uppercase',
                       }}
                     >
                       {label}
-                    </span>
-                    <p style={{ color: '#FBFBFC', fontSize: 14, margin: '4px 0 0', fontWeight: 500 }}>
-                      Assistir no YouTube →
+                    </div>
+                  </div>
+                  {/* Info do turno */}
+                  <div style={{ padding: '18px 20px' }}>
+                    <div style={{ fontSize: 18, fontWeight: 800, color: '#FBFBFC', marginBottom: 4 }}>
+                      {time}
+                    </div>
+                    <p style={{ color: '#7290BA', fontSize: 14, margin: '0 0 12px', lineHeight: 1.5 }}>
+                      {desc}
                     </p>
+                    <span
+                      style={{
+                        fontSize: 13,
+                        color: '#EB6B15',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Assistir no YouTube →
+                    </span>
                   </div>
                 </div>
               </a>
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: 32 }}>
+          {/* Link playlist */}
+          <div style={{ textAlign: 'center', marginTop: 36 }}>
             <a
               href="https://www.youtube.com/playlist?list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3"
               target="_blank"
               rel="noopener noreferrer"
               style={{
                 display: 'inline-block',
-                background: 'rgba(255,255,255,0.08)',
+                background: 'rgba(255,255,255,0.06)',
                 color: '#FBFBFC',
                 textDecoration: 'none',
                 borderRadius: 8,
-                padding: '12px 28px',
+                padding: '13px 28px',
                 fontSize: 14,
                 fontWeight: 600,
                 border: '1px solid rgba(255,255,255,0.15)',
               }}
             >
-              Ver playlist completa →
+              Ver todos os vídeos da 1ª edição →
             </a>
           </div>
         </div>
@@ -618,7 +673,7 @@ export default function HomePage() {
               boxShadow: '0 4px 24px rgba(235,107,21,0.5)',
             }}
           >
-            Registrar meu interesse →
+            Fazer meu pré-cadastro →
           </Link>
         </div>
       </section>
