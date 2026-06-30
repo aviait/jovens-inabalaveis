@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   CHURCHES,
@@ -30,6 +30,21 @@ export default function FormPage() {
   const [topics, setTopics] = useState<string[]>([]);
   const [freeMealSessions, setFreeMealSessions] = useState<string[]>([]);
   const [mealScenario, setMealScenario] = useState('');
+  const [focusField, setFocusField] = useState<string | null>(null);
+
+  const maxBirth = (() => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 10);
+    return d.toISOString().slice(0, 10);
+  })();
+
+  const birthDateValid = !!birthDate && birthDate <= maxBirth;
+
+  function focusStyle(field: string): React.CSSProperties {
+    return focusField === field
+      ? { borderColor: '#003D8F', boxShadow: '0 0 0 3px rgba(0,61,143,0.12)' }
+      : {};
+  }
 
   function toggleTopic(topic: string) {
     setTopics((prev) =>
@@ -196,46 +211,36 @@ export default function FormPage() {
                 <label style={F.label}>
                   Nome Completo
                   <input
-                    style={F.input}
+                    style={{ ...F.input, ...focusStyle('name') }}
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Seu nome completo"
+                    onFocus={() => setFocusField('name')}
+                    onBlur={() => setFocusField(null)}
                   />
                 </label>
                 <label style={F.label}>
                   Data de Nascimento
                   <input
-                    style={F.input}
+                    style={{ ...F.input, ...focusStyle('birth'), colorScheme: 'light' }}
                     type="date"
                     value={birthDate}
+                    min="1970-01-01"
+                    max={maxBirth}
                     onChange={(e) => setBirthDate(e.target.value)}
+                    onFocus={() => setFocusField('birth')}
+                    onBlur={() => setFocusField(null)}
                   />
+                  {birthDate && !birthDateValid && (
+                    <span style={{ fontSize: 12, color: '#dc2626', fontWeight: 500, marginTop: 2 }}>
+                      Deve ter pelo menos 10 anos.
+                    </span>
+                  )}
                 </label>
-                <label style={F.label}>
-                  Congregação / Igreja Local
-                  <input
-                    list="churches-list"
-                    style={F.input}
-                    value={church}
-                    onChange={(e) => setChurch(e.target.value)}
-                    placeholder="Selecione ou digite sua congregação"
-                    autoComplete="off"
-                  />
-                  <datalist id="churches-list">
-                    {CHURCHES.map((c) => (
-                      <option key={c} value={c} />
-                    ))}
-                  </datalist>
-                  {church.trim() &&
-                    !CHURCHES.includes(church.trim().toUpperCase() as (typeof CHURCHES)[number]) && (
-                      <span style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>
-                        Congregação não listada — será salva como informada.
-                      </span>
-                    )}
-                </label>
+                <ChurchCombobox value={church} onChange={setChurch} />
                 <button
                   style={F.btn}
-                  disabled={!fullName.trim() || !birthDate || !church.trim()}
+                  disabled={!fullName.trim() || !birthDateValid || !church.trim()}
                   onClick={() => setStep(2)}
                 >
                   Próximo →
@@ -385,6 +390,165 @@ export default function FormPage() {
   );
 }
 
+function ChurchCombobox({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [query, setQuery] = useState(value);
+  const [open, setOpen] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const filtered = query.trim()
+    ? CHURCHES.filter((c) => c.toLowerCase().includes(query.trim().toLowerCase()))
+    : CHURCHES;
+
+  const isCustom = query.trim() && !CHURCHES.some((c) => c.toLowerCase() === query.trim().toLowerCase());
+
+  function select(option: string) {
+    setQuery(option);
+    onChange(option);
+    setOpen(false);
+  }
+
+  function handleBlur() {
+    closeTimer.current = setTimeout(() => {
+      setOpen(false);
+      // confirma valor digitado mesmo se não estiver na lista
+      if (query.trim()) onChange(query.trim());
+    }, 150);
+  }
+
+  function handleFocus() {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpen(true);
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 20 }}>
+      <span style={{ fontSize: 14, fontWeight: 600, color: '#001d4d' }}>
+        Congregação / Igreja Local
+      </span>
+      <div style={{ position: 'relative' }}>
+        <input
+          type="text"
+          style={{
+            ...F.input,
+            paddingRight: 36,
+            borderColor: open ? '#003D8F' : '#d1d5db',
+            boxShadow: open ? '0 0 0 3px rgba(0,61,143,0.12)' : 'none',
+            outline: 'none',
+          }}
+          value={query}
+          placeholder="Buscar congregação…"
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck={false}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            onChange(''); // invalida até selecionar
+            setOpen(true);
+          }}
+        />
+        {/* Ícone seta */}
+        <span
+          style={{
+            position: 'absolute',
+            right: 12,
+            top: '50%',
+            transform: `translateY(-50%) rotate(${open ? '180deg' : '0deg'})`,
+            transition: 'transform 0.2s',
+            color: '#6b7280',
+            pointerEvents: 'none',
+            fontSize: 14,
+          }}
+        >
+          ▾
+        </span>
+
+        {open && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 'calc(100% + 4px)',
+              left: 0,
+              right: 0,
+              background: '#fff',
+              border: '1px solid #d1d5db',
+              borderRadius: 10,
+              boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+              zIndex: 50,
+              maxHeight: 240,
+              overflowY: 'auto',
+              WebkitOverflowScrolling: 'touch',
+            } as React.CSSProperties}
+          >
+            {filtered.length > 0 ? (
+              filtered.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onMouseDown={(e) => {
+                    e.preventDefault(); // evita blur antes do click
+                    select(c);
+                  }}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '12px 16px',
+                    fontSize: 14,
+                    color: value === c ? '#003D8F' : '#374151',
+                    fontWeight: value === c ? 700 : 400,
+                    background: value === c ? '#EEF2FF' : 'transparent',
+                    border: 'none',
+                    borderBottom: '1px solid #f3f4f6',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {c}
+                </button>
+              ))
+            ) : (
+              <div style={{ padding: '16px', textAlign: 'center' }}>
+                <p style={{ fontSize: 13, color: '#6b7280', margin: '0 0 10px' }}>
+                  Nenhuma congregação encontrada.
+                </p>
+                {isCustom && (
+                  <button
+                    type="button"
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      select(query.trim());
+                    }}
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 600,
+                      color: '#003D8F',
+                      background: '#EEF2FF',
+                      border: '1px solid #c0d4f5',
+                      borderRadius: 6,
+                      padding: '8px 14px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Usar &ldquo;{query.trim()}&rdquo;
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {value && !CHURCHES.some((c) => c === value) && (
+        <span style={{ fontSize: 12, color: '#6b7280' }}>
+          Congregação não listada — será salva como informada.
+        </span>
+      )}
+    </div>
+  );
+}
+
 const F = {
   label: {
     display: 'flex' as const,
@@ -403,8 +567,12 @@ const F = {
     outline: 'none',
     marginTop: 2,
     width: '100%',
+    minHeight: 46,
     boxSizing: 'border-box' as const,
     background: '#fff',
+    transition: 'border-color 0.15s, box-shadow 0.15s',
+    color: '#111827',
+    lineHeight: '1.5',
   },
   checkboxLabel: {
     display: 'flex' as const,
