@@ -32,19 +32,40 @@ export default function FormPage() {
   const [mealScenario, setMealScenario] = useState('');
   const [focusField, setFocusField] = useState<string | null>(null);
 
-  const maxBirth = (() => {
-    const d = new Date();
-    d.setFullYear(d.getFullYear() - 10);
-    return d.toISOString().slice(0, 10);
-  })();
-
-  const birthDateValid = !!birthDate && birthDate <= maxBirth;
-
   function focusStyle(field: string): React.CSSProperties {
     return focusField === field
       ? { borderColor: '#003D8F', boxShadow: '0 0 0 3px rgba(0,61,143,0.12)' }
       : {};
   }
+
+  function handleBirthDateInput(e: React.ChangeEvent<HTMLInputElement>) {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 8);
+    let masked = digits;
+    if (digits.length > 4) {
+      masked = digits.slice(0, 2) + '/' + digits.slice(2, 4) + '/' + digits.slice(4);
+    } else if (digits.length > 2) {
+      masked = digits.slice(0, 2) + '/' + digits.slice(2);
+    }
+    setBirthDate(masked);
+  }
+
+  const parsedBirth = (() => {
+    const m = birthDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!m) return null;
+    const day = +(m[1] ?? '0'), month = +(m[2] ?? '0'), year = +(m[3] ?? '0');
+    if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+    const d = new Date(year, month - 1, day);
+    if (d.getDate() !== day || d.getMonth() !== month - 1 || d.getFullYear() !== year) return null;
+    return d;
+  })();
+
+  const minBirthDate = (() => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 10);
+    return d;
+  })();
+
+  const birthDateValid = !!parsedBirth && parsedBirth <= minBirthDate;
 
   function toggleTopic(topic: string) {
     setTopics((prev) =>
@@ -62,9 +83,12 @@ export default function FormPage() {
     setStatus('submitting');
     setErrorMessage('');
 
+    const [dd, mm, yyyy] = birthDate.split('/');
+    const isoDate = `${yyyy}-${mm}-${dd}`;
+
     const payload: SubmissionInput = {
       fullName,
-      birthDate,
+      birthDate: isoDate,
       church,
       topics: topics as SubmissionInput['topics'],
       freeMealSessions: freeMealSessions as SubmissionInput['freeMealSessions'],
@@ -222,18 +246,19 @@ export default function FormPage() {
                 <label style={F.label}>
                   Data de Nascimento
                   <input
-                    style={{ ...F.input, ...focusStyle('birth'), colorScheme: 'light' }}
-                    type="date"
+                    style={{ ...F.input, ...focusStyle('birth') }}
+                    type="text"
+                    inputMode="numeric"
                     value={birthDate}
-                    min="1970-01-01"
-                    max={maxBirth}
-                    onChange={(e) => setBirthDate(e.target.value)}
+                    placeholder="DD/MM/AAAA"
+                    maxLength={10}
+                    onChange={handleBirthDateInput}
                     onFocus={() => setFocusField('birth')}
                     onBlur={() => setFocusField(null)}
                   />
-                  {birthDate && !birthDateValid && (
+                  {birthDate.length === 10 && !birthDateValid && (
                     <span style={{ fontSize: 12, color: '#dc2626', fontWeight: 500, marginTop: 2 }}>
-                      Deve ter pelo menos 10 anos.
+                      {!parsedBirth ? 'Data inválida.' : 'Deve ter pelo menos 10 anos.'}
                     </span>
                   )}
                 </label>
@@ -560,19 +585,21 @@ const F = {
     color: '#001d4d',
   },
   input: {
-    padding: '10px 14px',
+    padding: '0 14px',
     borderRadius: 8,
     border: '1px solid #d1d5db',
     fontSize: 15,
     outline: 'none',
     marginTop: 2,
     width: '100%',
-    minHeight: 46,
+    height: 46,
     boxSizing: 'border-box' as const,
     background: '#fff',
     transition: 'border-color 0.15s, box-shadow 0.15s',
     color: '#111827',
-    lineHeight: '1.5',
+    lineHeight: '46px',
+    WebkitAppearance: 'none' as const,
+    appearance: 'none' as const,
   },
   checkboxLabel: {
     display: 'flex' as const,
