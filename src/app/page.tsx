@@ -670,10 +670,69 @@ export default function HomePage() {
       </section>
 
       {/* ── FOOTER ────────────────────────────────────────── */}
-      <footer style={{ background: '#001f4d', padding: '32px 24px', textAlign: 'center' }}>
-        <p style={{ fontSize: 13, color: '#7290BA', margin: 0 }}>
-          Seminário Jovens Inabaláveis · 22 de Agosto de 2026 · Evento gratuito e aberto a todos
-        </p>
+      <footer style={{ background: '#001533', padding: '48px 24px 32px' }}>
+        {/* Realizado por */}
+        <div
+          style={{
+            maxWidth: 700,
+            margin: '0 auto 36px',
+            textAlign: 'center',
+          }}
+        >
+          <p
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: 2.5,
+              color: 'rgba(255,255,255,0.3)',
+              textTransform: 'uppercase',
+              marginBottom: 20,
+            }}
+          >
+            Uma realização de
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 40,
+              flexWrap: 'wrap',
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-umadpb-white.webp"
+              alt="UMADPB — União da Mocidade da Assembleia de Deus na Paraíba"
+              style={{ height: 56, width: 'auto', opacity: 0.85 }}
+            />
+            <div
+              style={{
+                width: 1,
+                height: 40,
+                background: 'rgba(255,255,255,0.12)',
+              }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-adpb-white.webp"
+              alt="ADPB — Assembleia de Deus na Paraíba"
+              style={{ height: 40, width: 'auto', opacity: 0.85 }}
+            />
+          </div>
+        </div>
+
+        <div
+          style={{
+            borderTop: '1px solid rgba(255,255,255,0.06)',
+            paddingTop: 24,
+            textAlign: 'center',
+          }}
+        >
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.25)', margin: 0 }}>
+            Seminário Jovens Inabaláveis · 22 de Agosto de 2026 · Evento gratuito e aberto a todos
+          </p>
+        </div>
       </footer>
     </div>
   );
