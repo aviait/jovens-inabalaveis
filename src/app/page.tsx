@@ -412,6 +412,141 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── 1ª EDIÇÃO ─────────────────────────────────────── */}
+      <section style={{ background: '#001f4d', padding: '80px 24px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <p
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: 3,
+                color: '#EB6B15',
+                textTransform: 'uppercase',
+                marginBottom: 12,
+              }}
+            >
+              1ª Edição
+            </p>
+            <h2 style={{ fontSize: 'clamp(24px, 4vw, 38px)', fontWeight: 900, color: '#FBFBFC', margin: 0 }}>
+              Reveja o que aconteceu
+            </h2>
+            <p style={{ fontSize: 15, color: '#7290BA', marginTop: 12 }}>
+              A primeira edição ficou gravada. Assista na íntegra e se prepare para a próxima.
+            </p>
+          </div>
+
+          <div
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}
+          >
+            {[
+              {
+                label: 'MANHÃ',
+                videoId: '90Bv3QAjNPo',
+                url: 'https://www.youtube.com/watch?v=90Bv3QAjNPo&t=1914s',
+              },
+              {
+                label: 'TARDE',
+                videoId: 'dIxQOvfDYkg',
+                url: 'https://www.youtube.com/live/dIxQOvfDYkg',
+              },
+              {
+                label: 'NOITE',
+                videoId: 'aX-XU7l0ovQ',
+                url: 'https://www.youtube.com/watch?v=aX-XU7l0ovQ&t=1343s',
+              },
+            ].map(({ label, videoId, url }) => (
+              <a
+                key={label}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none', display: 'block' }}
+              >
+                <div
+                  style={{
+                    borderRadius: 12,
+                    overflow: 'hidden',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    transition: 'transform 0.2s',
+                  }}
+                >
+                  <div style={{ position: 'relative' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                      alt={`Sessão da ${label}`}
+                      style={{ width: '100%', display: 'block', aspectRatio: '16/9', objectFit: 'cover' }}
+                    />
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'rgba(0,0,0,0.3)',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 56,
+                          height: 56,
+                          borderRadius: '50%',
+                          background: '#EB6B15',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <span style={{ fontSize: 20, marginLeft: 3 }}>▶</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ padding: '16px 18px', background: 'rgba(255,255,255,0.05)' }}>
+                    <span
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 700,
+                        letterSpacing: 2,
+                        color: '#EB6B15',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      {label}
+                    </span>
+                    <p style={{ color: '#FBFBFC', fontSize: 14, margin: '4px 0 0', fontWeight: 500 }}>
+                      Assistir no YouTube →
+                    </p>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: 32 }}>
+            <a
+              href="https://www.youtube.com/playlist?list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-block',
+                background: 'rgba(255,255,255,0.08)',
+                color: '#FBFBFC',
+                textDecoration: 'none',
+                borderRadius: 8,
+                padding: '12px 28px',
+                fontSize: 14,
+                fontWeight: 600,
+                border: '1px solid rgba(255,255,255,0.15)',
+              }}
+            >
+              Ver playlist completa →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA FINAL ─────────────────────────────────────── */}
       <section
         style={{

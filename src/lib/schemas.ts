@@ -1,5 +1,28 @@
 import { z } from 'zod';
 
+export const CHURCHES = [
+  'VALENTINA 1',
+  'VALENTINA 2',
+  'SANTA BÁRBARA',
+  'FREI DAMIÃO',
+  'BARRA DE GRAMAME',
+  'CIDADE MARAVILHOSA',
+  'NOVA MANGABEIRA',
+  'PARATIBE 1',
+  'PARATIBE 2',
+  'MARIBONDO',
+  'PONTA DE GRAMAME',
+  'GRAVATÁ',
+  'PLANÍCIE DOURADA',
+  'GUAXIMDUBA',
+  'VALE DO SONHO',
+  'MUSSUMAGO',
+  'PARQUE DO SOL 1',
+  'PARQUE DO SOL 2',
+  'LITORAL SUL 1',
+  'LITORAL SUL 2',
+] as const;
+
 export const TOPICS = [
   'O que é uma ideologia e como ela afeta a fé',
   'A falácia do Materialismo Histórico',

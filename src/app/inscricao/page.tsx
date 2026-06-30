@@ -4,7 +4,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { MEAL_SCENARIO_LABELS, MEAL_SCENARIOS, SESSIONS, TOPICS, type SubmissionInput } from '@/lib/schemas';
+import {
+  CHURCHES,
+  MEAL_SCENARIO_LABELS,
+  MEAL_SCENARIOS,
+  SESSIONS,
+  TOPICS,
+  type SubmissionInput,
+} from '@/lib/schemas';
 
 type Step = 1 | 2 | 3 | 4;
 type Status = 'idle' | 'submitting' | 'error';
@@ -157,11 +164,23 @@ export default function FormPage() {
               <label style={F.label}>
                 Congregação / Igreja Local
                 <input
+                  list="churches-list"
                   style={F.input}
                   value={church}
                   onChange={(e) => setChurch(e.target.value)}
-                  placeholder="Nome da sua igreja ou congregação"
+                  placeholder="Selecione ou digite sua congregação"
+                  autoComplete="off"
                 />
+                <datalist id="churches-list">
+                  {CHURCHES.map((c) => (
+                    <option key={c} value={c} />
+                  ))}
+                </datalist>
+                {church.trim() && !CHURCHES.includes(church.trim().toUpperCase() as (typeof CHURCHES)[number]) && (
+                  <span style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>
+                    Congregação não listada — será salva como informada.
+                  </span>
+                )}
               </label>
               <button
                 style={F.btn}
