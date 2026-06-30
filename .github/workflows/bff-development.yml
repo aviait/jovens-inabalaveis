@@ -1,0 +1,75 @@
+name: app-v2-development
+
+on:
+  pull_request:
+    branches:
+      - development
+    paths:
+      - 'src/**'
+      - 'prisma/**'
+      - 'scripts/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'next.config.ts'
+      - 'Dockerfile'
+      - '.github/workflows/bff-development.yml'
+  push:
+    branches:
+      - development
+    paths:
+      - 'src/**'
+      - 'prisma/**'
+      - 'scripts/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'next.config.ts'
+      - 'Dockerfile'
+      - '.github/workflows/bff-development.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+  packages: write
+  security-events: write
+
+concurrency:
+  group: app-v2-development-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app_dev:
+    permissions:
+      contents: write
+      actions: read
+      packages: write
+      security-events: write
+    uses: aviait/deploy-templates/.github/workflows/v2-bff.yml@main
+    with:
+      app_name: ${{ vars.APP_NAME }}
+      environment: ${{ vars.PIPELINE_ENV_DEV || 'dev' }}
+      working_directory: .
+      node_version: ${{ vars.NODE_VERSION || '22' }}
+      package_manager: ${{ vars.PACKAGE_MANAGER || 'npm' }}
+      cache_dependency_path: ${{ vars.CACHE_DEPENDENCY_PATH || 'package-lock.json' }}
+      lint_cmd: ${{ vars.LINT_CMD || 'npm run lint' }}
+      typecheck_cmd: ${{ vars.TYPECHECK_CMD || 'npm run typecheck' }}
+      test_cmd: ${{ vars.TEST_CMD || 'npm test' }}
+      dockerfile: ${{ vars.DOCKERFILE || 'Dockerfile' }}
+      registry: ${{ vars.REGISTRY }}
+      image_namespace: ${{ vars.IMAGE_NAMESPACE }}
+      image_name: ${{ vars.IMAGE_NAME }}
+      semver_prefix: ${{ vars.PIPELINE_SEMVER_PREFIX || 'v' }}
+      enable_release: false
+      deploy_on_tag_only: false
+      inject_all_git_vars: ${{ vars.INJECT_ALL_GIT_VARS != 'false' }}
+      git_vars_exclude: ${{ vars.GIT_VARS_EXCLUDE }}
+    secrets:
+      CHECKOUT_TOKEN: ${{ secrets.CHECKOUT_TOKEN }}
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+      PEM_KEY: ${{ secrets.PEM_KEY }}
+      DEPLOY_REGISTRY_USERNAME: ${{ secrets.DEPLOY_REGISTRY_USERNAME }}
+      DEPLOY_REGISTRY_PASSWORD: ${{ secrets.DEPLOY_REGISTRY_PASSWORD }}
+      DOCKER_RUN_ENVS_FILE: ${{ secrets.DOCKER_RUN_ENVS_FILE }}

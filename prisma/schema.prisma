@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Submission {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  fullName  String
+  birthDate DateTime @db.Date
+  church    String
+
+  // até 6 das 13 opções disponíveis
+  topics String[]
+
+  // Manhã / Tarde / Noite — cenário de refeição gratuita
+  freeMealSessions String[]
+
+  // código da opção de custo escolhida (meal_free | r10 | r20 | r40 | need_support | own_meal | wont_come)
+  mealScenario String
+
+  @@index([createdAt(sort: Desc)])
+  @@map("submissions")
+}
