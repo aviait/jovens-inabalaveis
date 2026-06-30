@@ -17,9 +17,9 @@ const TOPICS_GRID = [
 ];
 
 const SCHEDULE = [
-  { period: 'MANHÃ', time: '09h – 12h', description: 'Abertura, adoração e primeira sessão de ensino.' },
-  { period: 'TARDE', time: '14h – 17h', description: 'Sessões temáticas com debate e aprofundamento.' },
-  { period: 'NOITE', time: '19h – 21h30', description: 'Encerramento, reflexão e compromisso de vida.' },
+  { period: 'MANHÃ', time: '09h – 12h', description: 'Abertura, louvor e as primeiras sessões de ensino.' },
+  { period: 'TARDE', time: '14h – 17h', description: 'Continuação dos temas, perguntas e debate aberto.' },
+  { period: 'NOITE', time: '19h – 21h30', description: 'Última sessão, oração e encerramento.' },
 ];
 
 export default function HomePage() {
@@ -200,8 +200,8 @@ export default function HomePage() {
               lineHeight: 1.8,
             }}
           >
-            Um dia inteiro de aprendizado, comunhão e fortalecimento espiritual. Evento 100%{' '}
-            <strong style={{ color: '#FACAA5' }}>gratuito e aberto a todos</strong>.
+            Um dia mergulhado na Palavra, ao lado de jovens que querem se firmar na fé.{' '}
+            <strong style={{ color: '#FACAA5' }}>Gratuito e aberto a todos</strong>.
           </p>
 
           <div className="hero-cta-row" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -315,18 +315,17 @@ export default function HomePage() {
               lineHeight: 1.1,
             }}
           >
-            Um encontro para fortalecer
-            <br />a fé cristã
+            Fé que não balança
+            <br />quando o mundo empurra
           </h2>
           <p style={{ fontSize: 17, color: '#4b5563', lineHeight: 1.9, marginBottom: 20 }}>
-            Vivemos em um tempo em que diversas ideologias desafiam os fundamentos da fé cristã. O{' '}
-            <strong>Seminário Jovens Inabaláveis</strong> nasce do desejo de equipar jovens com conhecimento,
-            discernimento e firmeza para permanecerem firmes diante das pressões culturais.
+            Tem muita coisa no ar tentando convencer os jovens de que a fé cristã é ultrapassada, ingênua ou
+            irrelevante. O <strong>Seminário Jovens Inabaláveis</strong> existe pra mostrar que não é bem assim
+            — e pra te ajudar a saber o porquê você acredita no que acredita.
           </p>
           <p style={{ fontSize: 17, color: '#4b5563', lineHeight: 1.9 }}>
-            Ao longo de um dia inteiro, mergulharemos em temas centrais que tocam a cosmovisão cristã —
-            identificando falácias, aprofundando o conhecimento bíblico e saindo mais preparados para viver e
-            testemunhar a fé no cotidiano.
+            Em um dia inteiro, a gente vai entrar fundo em temas que a galera tem dúvida mas raramente discute
+            na igreja. Você vai sair sabendo mais — e mais firme.
           </p>
           <div style={{ marginTop: 40, paddingTop: 36, borderTop: '1px solid #e5e7eb' }}>
             <SectionCTA label="Quero participar da 2ª edição →" />
@@ -351,7 +350,7 @@ export default function HomePage() {
               Programação
             </p>
             <h2 style={{ fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 900, color: '#FBFBFC', margin: 0 }}>
-              Um dia completo de aprendizado
+              Como vai ser o dia
             </h2>
           </div>
 
@@ -423,8 +422,8 @@ export default function HomePage() {
               Possíveis temas
             </h2>
             <p style={{ fontSize: 15, color: '#6b7280', margin: 0 }}>
-              No pré-cadastro, você nos diz quais temas são mais urgentes pra você. A grade final será
-              definida a partir dessas respostas.
+              A grade ainda não está fechada. No pré-cadastro você vota nos temas que acha mais urgente — e a
+              programação vai ser definida com base nisso.
             </p>
           </div>
 
@@ -646,8 +645,8 @@ export default function HomePage() {
             conosco!
           </h2>
           <p style={{ fontSize: 16, color: 'rgba(251,251,252,0.7)', margin: '0 0 40px', lineHeight: 1.8 }}>
-            Faça seu pré-cadastro e nos ajude a entender quem quer participar
-            <br />e o que espera do evento — sem compromisso.
+            É só uma forma de saber quem tá animado e o que você quer ver lá.
+            <br />Sem compromisso, sem taxa, sem nada — só clica e registra.
           </p>
           <Link
             href="/pre-cadastro"

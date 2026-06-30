@@ -206,7 +206,7 @@ export default function FormPage() {
                   Quem é você?
                 </h2>
                 <p style={{ fontSize: 13, color: '#6b7280', margin: '0 0 24px', lineHeight: 1.6 }}>
-                  Registre seu interesse — isso <strong>não</strong> é uma inscrição confirmada.
+                  Só estamos mapeando quem tá animado. Isso <strong>não</strong> é uma inscrição confirmada.
                 </p>
                 <label style={F.label}>
                   Nome Completo
@@ -254,8 +254,8 @@ export default function FormPage() {
                   Quais temas você quer ver?
                 </h2>
                 <p style={{ fontSize: 14, color: '#4b5563', margin: '0 0 20px', lineHeight: 1.6 }}>
-                  Estes são possíveis temas. Escolha até <strong>6</strong> que você considera mais
-                  urgentes — sua resposta ajuda a definir a grade.{' '}
+                  Esses são os temas possíveis. Marca até <strong>6</strong> que você acha mais importante ver
+                  lá — sua resposta define o que vai ter na grade.{' '}
                   <span style={{ color: '#EB6B15', fontWeight: 700 }}>{topics.length}/6</span>
                 </p>
                 {TOPICS.map((topic) => (
@@ -293,9 +293,9 @@ export default function FormPage() {
                   Disponibilidade
                 </h2>
                 <p style={{ fontSize: 14, color: '#4b5563', margin: '0 0 20px', lineHeight: 1.6 }}>
-                  Se a alimentação (almoço e jantar) for 100%{' '}
-                  <span style={{ color: '#EB6B15', fontWeight: 700 }}>gratuita</span>, em quais turnos você
-                  participaria?
+                  Se o almoço e jantar fossem 100%{' '}
+                  <span style={{ color: '#EB6B15', fontWeight: 700 }}>de graça</span>, em quais turnos você
+                  estaria presente?
                 </p>
                 {SESSIONS.map((session) => (
                   <label key={session} style={F.checkboxLabel}>
@@ -327,7 +327,7 @@ export default function FormPage() {
                   Cenário Realista
                 </h2>
                 <p style={{ fontSize: 14, color: '#4b5563', margin: '0 0 20px', lineHeight: 1.6 }}>
-                  Caso seja necessário cobrar uma taxa, como isso afetaria sua presença?
+                  Se precisar cobrar uma taxa pra cobrir custos, como isso te afeta?
                 </p>
                 {MEAL_SCENARIOS.map((scenario) => (
                   <label

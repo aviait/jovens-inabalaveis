@@ -30,12 +30,12 @@ export default function ObrigadoPage() {
           Interesse registrado!
         </h1>
         <p style={{ fontSize: 16, color: '#6b7280', margin: '0 0 8px', lineHeight: 1.7 }}>
-          Recebemos seu pré-cadastro no{' '}
-          <strong style={{ color: '#003D8F' }}>Seminário Jovens Inabaláveis</strong>.
+          Seu interesse no{' '}
+          <strong style={{ color: '#003D8F' }}>Seminário Jovens Inabaláveis</strong> foi registrado.
         </p>
         <p style={{ fontSize: 15, color: '#6b7280', margin: '0 0 32px', lineHeight: 1.7 }}>
-          Assim que tivermos mais detalhes sobre o evento, você será avisado. Enquanto isso,{' '}
-          <span style={{ color: '#EB6B15', fontWeight: 700 }}>compartilhe com seus amigos!</span>
+          Quando tiver novidade sobre o evento, você fica sabendo primeiro. Enquanto isso,{' '}
+          <span style={{ color: '#EB6B15', fontWeight: 700 }}>chama seus amigos!</span>
         </p>
         <Link
           href="/"
