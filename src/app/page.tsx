@@ -80,7 +80,7 @@ export default function HomePage() {
             </span>
           </div>
           <Link
-            href="/inscricao"
+            href="/pre-cadastro"
             style={{
               background: '#EB6B15',
               color: '#fff',
@@ -92,7 +92,7 @@ export default function HomePage() {
               letterSpacing: 0.5,
             }}
           >
-            Inscrever-se
+            Pré-cadastro
           </Link>
         </nav>
 
@@ -189,7 +189,7 @@ export default function HomePage() {
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link
-              href="/inscricao"
+              href="/pre-cadastro"
               style={{
                 background: '#EB6B15',
                 color: '#fff',
@@ -202,7 +202,7 @@ export default function HomePage() {
                 boxShadow: '0 4px 24px rgba(235,107,21,0.4)',
               }}
             >
-              Quero me inscrever →
+              Quero participar →
             </Link>
             <a
               href="#sobre"
@@ -603,7 +603,7 @@ export default function HomePage() {
             <br />o melhor seminário possível para você.
           </p>
           <Link
-            href="/inscricao"
+            href="/pre-cadastro"
             style={{
               display: 'inline-block',
               background: '#EB6B15',
@@ -617,7 +617,7 @@ export default function HomePage() {
               boxShadow: '0 4px 24px rgba(235,107,21,0.5)',
             }}
           >
-            Fazer minha inscrição →
+            Registrar meu interesse →
           </Link>
         </div>
       </section>

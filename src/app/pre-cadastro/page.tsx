@@ -87,7 +87,7 @@ export default function FormPage() {
         }}
       >
         <Link href="/" style={{ color: '#7290BA', fontSize: 13, textDecoration: 'none' }}>
-          ← Voltar ao início
+          ← Voltar
         </Link>
       </div>
 
@@ -140,9 +140,12 @@ export default function FormPage() {
 
           {step === 1 && (
             <section>
-              <h1 style={{ fontSize: 22, fontWeight: 800, color: '#003D8F', margin: '0 0 24px' }}>
-                Dados Pessoais
+              <h1 style={{ fontSize: 22, fontWeight: 800, color: '#003D8F', margin: '0 0 4px' }}>
+                Quem é você?
               </h1>
+              <p style={{ fontSize: 13, color: '#6b7280', margin: '0 0 20px' }}>
+                Pré-cadastro de interesse — não é uma inscrição confirmada.
+              </p>
               <label style={F.label}>
                 Nome Completo
                 <input
@@ -176,11 +179,12 @@ export default function FormPage() {
                     <option key={c} value={c} />
                   ))}
                 </datalist>
-                {church.trim() && !CHURCHES.includes(church.trim().toUpperCase() as (typeof CHURCHES)[number]) && (
-                  <span style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>
-                    Congregação não listada — será salva como informada.
-                  </span>
-                )}
+                {church.trim() &&
+                  !CHURCHES.includes(church.trim().toUpperCase() as (typeof CHURCHES)[number]) && (
+                    <span style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>
+                      Congregação não listada — será salva como informada.
+                    </span>
+                  )}
               </label>
               <button
                 style={F.btn}
@@ -320,7 +324,7 @@ export default function FormPage() {
                   disabled={!mealScenario || status === 'submitting'}
                   onClick={handleSubmit}
                 >
-                  {status === 'submitting' ? 'Enviando…' : 'Enviar inscrição'}
+                  {status === 'submitting' ? 'Enviando…' : 'Registrar interesse'}
                 </button>
               </div>
             </section>

@@ -23,19 +23,19 @@ export default function ObrigadoPage() {
           boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
         }}
       >
-        <div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
+        <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
         <h1
           style={{ fontSize: 28, fontWeight: 900, color: '#003D8F', margin: '0 0 12px', letterSpacing: -0.5 }}
         >
-          Inscrição realizada!
+          Interesse registrado!
         </h1>
         <p style={{ fontSize: 16, color: '#6b7280', margin: '0 0 8px', lineHeight: 1.7 }}>
-          Obrigado por se inscrever no{' '}
+          Recebemos seu pré-cadastro no{' '}
           <strong style={{ color: '#003D8F' }}>Seminário Jovens Inabaláveis</strong>.
         </p>
         <p style={{ fontSize: 15, color: '#6b7280', margin: '0 0 32px', lineHeight: 1.7 }}>
-          Nos vemos em <span style={{ color: '#EB6B15', fontWeight: 700 }}>22 de agosto de 2026</span>.
-          Compartilhe com seus amigos!
+          Assim que tivermos mais detalhes sobre o evento, você será avisado. Enquanto isso,{' '}
+          <span style={{ color: '#EB6B15', fontWeight: 700 }}>compartilhe com seus amigos!</span>
         </p>
         <Link
           href="/"
