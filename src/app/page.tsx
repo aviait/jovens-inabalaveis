@@ -111,39 +111,55 @@ export default function HomePage() {
             zIndex: 1,
           }}
         >
-          {/* badge */}
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              background: 'rgba(235,107,21,0.15)',
-              border: '1px solid rgba(235,107,21,0.4)',
-              borderRadius: 100,
-              padding: '6px 16px',
-              marginBottom: 24,
-            }}
-          >
-            <span
+          {/* badges */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 24 }}>
+            <div
               style={{
-                width: 8,
-                height: 8,
-                borderRadius: '50%',
-                background: '#EB6B15',
-                display: 'inline-block',
-              }}
-            />
-            <span
-              style={{
-                fontSize: 12,
-                fontWeight: 700,
-                letterSpacing: 2,
-                color: '#FACAA5',
-                textTransform: 'uppercase',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                background: 'rgba(235,107,21,0.2)',
+                border: '1px solid rgba(235,107,21,0.5)',
+                borderRadius: 100,
+                padding: '6px 18px',
               }}
             >
-              22 de Agosto de 2026
-            </span>
+              <span style={{ fontSize: 13, fontWeight: 800, color: '#EB6B15', textTransform: 'uppercase', letterSpacing: 1 }}>
+                2ª Edição
+              </span>
+            </div>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                borderRadius: 100,
+                padding: '5px 14px',
+              }}
+            >
+              <span
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  background: '#EB6B15',
+                  display: 'inline-block',
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  letterSpacing: 2,
+                  color: '#FACAA5',
+                  textTransform: 'uppercase',
+                }}
+              >
+                22 de Agosto de 2026
+              </span>
+            </div>
           </div>
 
           <h1
@@ -461,35 +477,20 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Cards dos 3 turnos */}
+          {/* Grid de 6 vídeos separados por turno */}
           <div
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}
           >
             {[
-              {
-                label: 'MANHÃ',
-                time: '09h – 12h',
-                desc: 'Abertura e primeiro bloco de ensino',
-                videoId: '90Bv3QAjNPo',
-                url: 'https://www.youtube.com/watch?v=90Bv3QAjNPo&t=1914s',
-              },
-              {
-                label: 'TARDE',
-                time: '14h – 17h',
-                desc: 'Sessões temáticas e debate',
-                videoId: 'dIxQOvfDYkg',
-                url: 'https://www.youtube.com/live/dIxQOvfDYkg',
-              },
-              {
-                label: 'NOITE',
-                time: '19h – 21h30',
-                desc: 'Encerramento e reflexão final',
-                videoId: 'aX-XU7l0ovQ',
-                url: 'https://www.youtube.com/watch?v=aX-XU7l0ovQ&t=1343s',
-              },
-            ].map(({ label, time, desc, videoId, url }) => (
+              { badge: 'MANHÃ · Parte 1', videoId: 'TbsNadl45jA', url: 'https://www.youtube.com/watch?v=TbsNadl45jA&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=1' },
+              { badge: 'MANHÃ · Parte 2', videoId: 'eAHTYnvxaKg', url: 'https://www.youtube.com/watch?v=eAHTYnvxaKg&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=2' },
+              { badge: 'TARDE · Parte 1', videoId: 'sM5CExmx8F8', url: 'https://www.youtube.com/watch?v=sM5CExmx8F8&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=3' },
+              { badge: 'TARDE · Parte 2', videoId: 'TM6bUyJAbEI', url: 'https://www.youtube.com/watch?v=TM6bUyJAbEI&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=4' },
+              { badge: 'NOITE · Parte 1', videoId: 'aqrmmsdB8XA', url: 'https://www.youtube.com/watch?v=aqrmmsdB8XA&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=5' },
+              { badge: 'NOITE · Parte 2', videoId: '6wdwdXMHyNU', url: 'https://www.youtube.com/watch?v=6wdwdXMHyNU&list=PLj0jt80zmmZ99eSRlIlbboTFIb2N7UQA3&index=6' },
+            ].map(({ badge, videoId, url }) => (
               <a
-                key={label}
+                key={videoId}
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -497,9 +498,9 @@ export default function HomePage() {
               >
                 <div
                   style={{
-                    borderRadius: 14,
+                    borderRadius: 12,
                     overflow: 'hidden',
-                    border: '1px solid rgba(255,255,255,0.12)',
+                    border: '1px solid rgba(255,255,255,0.1)',
                     background: 'rgba(255,255,255,0.04)',
                   }}
                 >
@@ -508,10 +509,9 @@ export default function HomePage() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-                      alt={`Sessão da ${label} — 1ª edição`}
+                      alt={`${badge} — 1ª edição`}
                       style={{ width: '100%', display: 'block', aspectRatio: '16/9', objectFit: 'cover' }}
                     />
-                    {/* Overlay escuro + botão play */}
                     <div
                       style={{
                         position: 'absolute',
@@ -519,58 +519,44 @@ export default function HomePage() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        background: 'rgba(0,0,0,0.35)',
+                        background: 'rgba(0,0,0,0.3)',
                       }}
                     >
                       <div
                         style={{
-                          width: 60,
-                          height: 60,
+                          width: 52,
+                          height: 52,
                           borderRadius: '50%',
                           background: '#EB6B15',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 20px rgba(235,107,21,0.5)',
+                          boxShadow: '0 4px 16px rgba(235,107,21,0.5)',
                         }}
                       >
-                        <span style={{ fontSize: 22, marginLeft: 4 }}>▶</span>
+                        <span style={{ fontSize: 18, marginLeft: 4 }}>▶</span>
                       </div>
                     </div>
-                    {/* Badge do turno */}
                     <div
                       style={{
                         position: 'absolute',
-                        top: 12,
-                        left: 12,
+                        top: 10,
+                        left: 10,
                         background: '#EB6B15',
                         color: '#fff',
-                        fontSize: 11,
+                        fontSize: 10,
                         fontWeight: 700,
-                        letterSpacing: 2,
-                        padding: '4px 10px',
-                        borderRadius: 6,
+                        letterSpacing: 1,
+                        padding: '3px 8px',
+                        borderRadius: 5,
                         textTransform: 'uppercase',
                       }}
                     >
-                      {label}
+                      {badge}
                     </div>
                   </div>
-                  {/* Info do turno */}
-                  <div style={{ padding: '18px 20px' }}>
-                    <div style={{ fontSize: 18, fontWeight: 800, color: '#FBFBFC', marginBottom: 4 }}>
-                      {time}
-                    </div>
-                    <p style={{ color: '#7290BA', fontSize: 14, margin: '0 0 12px', lineHeight: 1.5 }}>
-                      {desc}
-                    </p>
-                    <span
-                      style={{
-                        fontSize: 13,
-                        color: '#EB6B15',
-                        fontWeight: 700,
-                      }}
-                    >
+                  <div style={{ padding: '12px 16px' }}>
+                    <span style={{ fontSize: 13, color: '#EB6B15', fontWeight: 700 }}>
                       Assistir no YouTube →
                     </span>
                   </div>
