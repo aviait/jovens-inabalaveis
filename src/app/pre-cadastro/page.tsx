@@ -76,260 +76,309 @@ export default function FormPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#003D8F' }}>
-      <div
-        style={{
-          background: '#002d6b',
-          padding: '16px 24px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-        }}
-      >
-        <Link href="/" style={{ color: '#7290BA', fontSize: 13, textDecoration: 'none' }}>
-          ← Voltar
+    <div
+      style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(160deg, #001533 0%, #002d6b 55%, #003D8F 100%)',
+      }}
+    >
+      {/* Barra de topo */}
+      <div style={{ padding: '16px 24px' }}>
+        <Link
+          href="/"
+          style={{
+            color: 'rgba(255,255,255,0.45)',
+            fontSize: 13,
+            textDecoration: 'none',
+            letterSpacing: 0.2,
+          }}
+        >
+          ← Voltar ao site
         </Link>
       </div>
 
       <main
         style={{
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '32px 16px',
+          padding: '8px 16px 48px',
           minHeight: 'calc(100vh - 53px)',
         }}
       >
-        <div
-          style={{
-            background: '#FBFBFC',
-            borderRadius: 16,
-            padding: '40px 36px',
-            maxWidth: 620,
-            width: '100%',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-          }}
-        >
-          <div style={{ display: 'flex', gap: 6, marginBottom: 28 }}>
-            {([1, 2, 3, 4] as Step[]).map((s) => (
-              <div
-                key={s}
-                style={{
-                  flex: 1,
-                  height: 4,
-                  borderRadius: 2,
-                  background: step >= s ? '#EB6B15' : '#e5e7eb',
-                  transition: 'background 0.3s',
-                }}
-              />
-            ))}
-          </div>
-
-          <p
+        {/* Cabeçalho de marca acima do card */}
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <div
             style={{
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: 2,
-              color: '#EB6B15',
+              display: 'inline-block',
+              background: '#EB6B15',
+              color: '#fff',
+              fontSize: 10,
+              fontWeight: 800,
+              letterSpacing: 2.5,
               textTransform: 'uppercase',
-              margin: '0 0 4px',
+              padding: '4px 12px',
+              borderRadius: 4,
+              marginBottom: 10,
             }}
           >
-            Etapa {step} de {TOTAL_STEPS}
+            2ª Edição
+          </div>
+          <h1
+            style={{
+              color: '#fff',
+              fontSize: 'clamp(22px, 5vw, 30px)',
+              fontWeight: 900,
+              margin: '0 0 6px',
+              letterSpacing: -0.5,
+              lineHeight: 1.2,
+            }}
+          >
+            Jovens Inabaláveis
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 13, margin: 0 }}>
+            22 de agosto de 2026 · Pré-cadastro de interesse
           </p>
+        </div>
 
-          {step === 1 && (
-            <section>
-              <h1 style={{ fontSize: 22, fontWeight: 800, color: '#003D8F', margin: '0 0 4px' }}>
-                Quem é você?
-              </h1>
-              <p style={{ fontSize: 13, color: '#6b7280', margin: '0 0 20px' }}>
-                Pré-cadastro de interesse — não é uma inscrição confirmada.
-              </p>
-              <label style={F.label}>
-                Nome Completo
-                <input
-                  style={F.input}
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Seu nome completo"
-                />
-              </label>
-              <label style={F.label}>
-                Data de Nascimento
-                <input
-                  style={F.input}
-                  type="date"
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                />
-              </label>
-              <label style={F.label}>
-                Congregação / Igreja Local
-                <input
-                  list="churches-list"
-                  style={F.input}
-                  value={church}
-                  onChange={(e) => setChurch(e.target.value)}
-                  placeholder="Selecione ou digite sua congregação"
-                  autoComplete="off"
-                />
-                <datalist id="churches-list">
-                  {CHURCHES.map((c) => (
-                    <option key={c} value={c} />
-                  ))}
-                </datalist>
-                {church.trim() &&
-                  !CHURCHES.includes(church.trim().toUpperCase() as (typeof CHURCHES)[number]) && (
-                    <span style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>
-                      Congregação não listada — será salva como informada.
-                    </span>
-                  )}
-              </label>
-              <button
-                style={F.btn}
-                disabled={!fullName.trim() || !birthDate || !church.trim()}
-                onClick={() => setStep(2)}
-              >
-                Próximo →
-              </button>
-            </section>
-          )}
+        {/* Card */}
+        <div
+          style={{
+            background: '#fff',
+            borderRadius: 16,
+            maxWidth: 620,
+            width: '100%',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.45)',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Faixa laranja de acento */}
+          <div style={{ height: 4, background: 'linear-gradient(90deg, #EB6B15 0%, #f5932d 100%)' }} />
 
-          {step === 2 && (
-            <section>
-              <h1 style={{ fontSize: 22, fontWeight: 800, color: '#003D8F', margin: '0 0 8px' }}>
-                Quais temas você quer ver?
-              </h1>
-              <p style={{ fontSize: 14, color: '#6b7280', margin: '0 0 20px' }}>
-                Estes são possíveis temas. Escolha até <strong>6</strong> que você considera mais
-                urgentes — sua resposta ajuda a definir a grade.{' '}
-                <span style={{ color: '#EB6B15', fontWeight: 700 }}>{topics.length}/6</span>
-              </p>
-              {TOPICS.map((topic) => (
-                <label
-                  key={topic}
+          <div style={{ padding: '32px 36px 40px' }}>
+            {/* Barra de progresso */}
+            <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
+              {([1, 2, 3, 4] as Step[]).map((s) => (
+                <div
+                  key={s}
                   style={{
-                    ...F.checkboxLabel,
-                    opacity: !topics.includes(topic) && topics.length >= 6 ? 0.4 : 1,
+                    flex: 1,
+                    height: 4,
+                    borderRadius: 2,
+                    background: step >= s ? '#EB6B15' : '#e5e7eb',
+                    transition: 'background 0.3s',
                   }}
-                >
-                  <input
-                    type="checkbox"
-                    checked={topics.includes(topic)}
-                    onChange={() => toggleTopic(topic)}
-                    disabled={!topics.includes(topic) && topics.length >= 6}
-                    style={{ accentColor: '#EB6B15', width: 16, height: 16, flexShrink: 0 }}
-                  />
-                  {topic}
-                </label>
+                />
               ))}
-              <div style={F.nav}>
-                <button style={F.btnSec} onClick={() => setStep(1)}>
-                  ← Voltar
-                </button>
-                <button style={F.btn} disabled={topics.length === 0} onClick={() => setStep(3)}>
-                  Próximo →
-                </button>
-              </div>
-            </section>
-          )}
+            </div>
+            <p
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: 1.8,
+                color: '#EB6B15',
+                textTransform: 'uppercase',
+                margin: '0 0 24px',
+              }}
+            >
+              Etapa {step} de {TOTAL_STEPS}
+            </p>
 
-          {step === 3 && (
-            <section>
-              <h1 style={{ fontSize: 22, fontWeight: 800, color: '#003D8F', margin: '0 0 8px' }}>
-                Disponibilidade
-              </h1>
-              <p style={{ fontSize: 14, color: '#374151', margin: '0 0 20px', lineHeight: 1.6 }}>
-                Se a alimentação (almoço e jantar) for 100%{' '}
-                <span style={{ color: '#EB6B15', fontWeight: 700 }}>gratuita</span>, em quais turnos você
-                participaria?
-              </p>
-              {SESSIONS.map((session) => (
-                <label key={session} style={F.checkboxLabel}>
-                  <input
-                    type="checkbox"
-                    checked={freeMealSessions.includes(session)}
-                    onChange={() => toggleSession(session)}
-                    style={{ accentColor: '#EB6B15', width: 16, height: 16, flexShrink: 0 }}
-                  />
-                  <span style={{ fontWeight: freeMealSessions.includes(session) ? 700 : 400 }}>
-                    {session}
-                  </span>
-                </label>
-              ))}
-              <div style={F.nav}>
-                <button style={F.btnSec} onClick={() => setStep(2)}>
-                  ← Voltar
-                </button>
-                <button style={F.btn} disabled={freeMealSessions.length === 0} onClick={() => setStep(4)}>
-                  Próximo →
-                </button>
-              </div>
-            </section>
-          )}
-
-          {step === 4 && (
-            <section>
-              <h1 style={{ fontSize: 22, fontWeight: 800, color: '#003D8F', margin: '0 0 8px' }}>
-                Cenário Realista
-              </h1>
-              <p style={{ fontSize: 14, color: '#374151', margin: '0 0 20px', lineHeight: 1.6 }}>
-                Caso seja necessário cobrar uma taxa, como isso afetaria sua presença?
-              </p>
-              {MEAL_SCENARIOS.map((scenario) => (
-                <label
-                  key={scenario}
-                  style={{
-                    ...F.checkboxLabel,
-                    background: mealScenario === scenario ? '#FFF4ED' : 'transparent',
-                    border: `1px solid ${mealScenario === scenario ? '#EB6B15' : '#e5e7eb'}`,
-                    borderRadius: 8,
-                    padding: '12px 14px',
-                    marginBottom: 8,
-                  }}
-                >
-                  <input
-                    type="radio"
-                    name="mealScenario"
-                    value={scenario}
-                    checked={mealScenario === scenario}
-                    onChange={() => setMealScenario(scenario)}
-                    style={{ accentColor: '#EB6B15', width: 16, height: 16, flexShrink: 0 }}
-                  />
-                  {MEAL_SCENARIO_LABELS[scenario]}
-                </label>
-              ))}
-
-              {status === 'error' && (
-                <p
-                  style={{
-                    color: '#dc2626',
-                    fontSize: 14,
-                    margin: '12px 0 0',
-                    padding: '10px 14px',
-                    background: '#fef2f2',
-                    borderRadius: 8,
-                  }}
-                >
-                  {errorMessage}
+            {step === 1 && (
+              <section>
+                <h2 style={{ fontSize: 22, fontWeight: 800, color: '#001d4d', margin: '0 0 4px' }}>
+                  Quem é você?
+                </h2>
+                <p style={{ fontSize: 13, color: '#6b7280', margin: '0 0 24px', lineHeight: 1.6 }}>
+                  Registre seu interesse — isso <strong>não</strong> é uma inscrição confirmada.
                 </p>
-              )}
-
-              <div style={F.nav}>
-                <button style={F.btnSec} onClick={() => setStep(3)}>
-                  ← Voltar
-                </button>
+                <label style={F.label}>
+                  Nome Completo
+                  <input
+                    style={F.input}
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Seu nome completo"
+                  />
+                </label>
+                <label style={F.label}>
+                  Data de Nascimento
+                  <input
+                    style={F.input}
+                    type="date"
+                    value={birthDate}
+                    onChange={(e) => setBirthDate(e.target.value)}
+                  />
+                </label>
+                <label style={F.label}>
+                  Congregação / Igreja Local
+                  <input
+                    list="churches-list"
+                    style={F.input}
+                    value={church}
+                    onChange={(e) => setChurch(e.target.value)}
+                    placeholder="Selecione ou digite sua congregação"
+                    autoComplete="off"
+                  />
+                  <datalist id="churches-list">
+                    {CHURCHES.map((c) => (
+                      <option key={c} value={c} />
+                    ))}
+                  </datalist>
+                  {church.trim() &&
+                    !CHURCHES.includes(church.trim().toUpperCase() as (typeof CHURCHES)[number]) && (
+                      <span style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>
+                        Congregação não listada — será salva como informada.
+                      </span>
+                    )}
+                </label>
                 <button
-                  style={{ ...F.btn, opacity: !mealScenario || status === 'submitting' ? 0.6 : 1 }}
-                  disabled={!mealScenario || status === 'submitting'}
-                  onClick={handleSubmit}
+                  style={F.btn}
+                  disabled={!fullName.trim() || !birthDate || !church.trim()}
+                  onClick={() => setStep(2)}
                 >
-                  {status === 'submitting' ? 'Enviando…' : 'Registrar interesse'}
+                  Próximo →
                 </button>
-              </div>
-            </section>
-          )}
+              </section>
+            )}
+
+            {step === 2 && (
+              <section>
+                <h2 style={{ fontSize: 22, fontWeight: 800, color: '#001d4d', margin: '0 0 8px' }}>
+                  Quais temas você quer ver?
+                </h2>
+                <p style={{ fontSize: 14, color: '#4b5563', margin: '0 0 20px', lineHeight: 1.6 }}>
+                  Estes são possíveis temas. Escolha até <strong>6</strong> que você considera mais
+                  urgentes — sua resposta ajuda a definir a grade.{' '}
+                  <span style={{ color: '#EB6B15', fontWeight: 700 }}>{topics.length}/6</span>
+                </p>
+                {TOPICS.map((topic) => (
+                  <label
+                    key={topic}
+                    style={{
+                      ...F.checkboxLabel,
+                      opacity: !topics.includes(topic) && topics.length >= 6 ? 0.4 : 1,
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={topics.includes(topic)}
+                      onChange={() => toggleTopic(topic)}
+                      disabled={!topics.includes(topic) && topics.length >= 6}
+                      style={{ accentColor: '#EB6B15', width: 16, height: 16, flexShrink: 0 }}
+                    />
+                    {topic}
+                  </label>
+                ))}
+                <div style={F.nav}>
+                  <button style={F.btnSec} onClick={() => setStep(1)}>
+                    ← Voltar
+                  </button>
+                  <button style={F.btn} disabled={topics.length === 0} onClick={() => setStep(3)}>
+                    Próximo →
+                  </button>
+                </div>
+              </section>
+            )}
+
+            {step === 3 && (
+              <section>
+                <h2 style={{ fontSize: 22, fontWeight: 800, color: '#001d4d', margin: '0 0 8px' }}>
+                  Disponibilidade
+                </h2>
+                <p style={{ fontSize: 14, color: '#4b5563', margin: '0 0 20px', lineHeight: 1.6 }}>
+                  Se a alimentação (almoço e jantar) for 100%{' '}
+                  <span style={{ color: '#EB6B15', fontWeight: 700 }}>gratuita</span>, em quais turnos você
+                  participaria?
+                </p>
+                {SESSIONS.map((session) => (
+                  <label key={session} style={F.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      checked={freeMealSessions.includes(session)}
+                      onChange={() => toggleSession(session)}
+                      style={{ accentColor: '#EB6B15', width: 16, height: 16, flexShrink: 0 }}
+                    />
+                    <span style={{ fontWeight: freeMealSessions.includes(session) ? 700 : 400 }}>
+                      {session}
+                    </span>
+                  </label>
+                ))}
+                <div style={F.nav}>
+                  <button style={F.btnSec} onClick={() => setStep(2)}>
+                    ← Voltar
+                  </button>
+                  <button style={F.btn} disabled={freeMealSessions.length === 0} onClick={() => setStep(4)}>
+                    Próximo →
+                  </button>
+                </div>
+              </section>
+            )}
+
+            {step === 4 && (
+              <section>
+                <h2 style={{ fontSize: 22, fontWeight: 800, color: '#001d4d', margin: '0 0 8px' }}>
+                  Cenário Realista
+                </h2>
+                <p style={{ fontSize: 14, color: '#4b5563', margin: '0 0 20px', lineHeight: 1.6 }}>
+                  Caso seja necessário cobrar uma taxa, como isso afetaria sua presença?
+                </p>
+                {MEAL_SCENARIOS.map((scenario) => (
+                  <label
+                    key={scenario}
+                    style={{
+                      ...F.checkboxLabel,
+                      background: mealScenario === scenario ? '#FFF4ED' : '#fafafa',
+                      border: `1px solid ${mealScenario === scenario ? '#EB6B15' : '#e5e7eb'}`,
+                      borderRadius: 8,
+                      padding: '12px 14px',
+                      marginBottom: 8,
+                      transition: 'border-color 0.2s, background 0.2s',
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      name="mealScenario"
+                      value={scenario}
+                      checked={mealScenario === scenario}
+                      onChange={() => setMealScenario(scenario)}
+                      style={{ accentColor: '#EB6B15', width: 16, height: 16, flexShrink: 0 }}
+                    />
+                    {MEAL_SCENARIO_LABELS[scenario]}
+                  </label>
+                ))}
+
+                {status === 'error' && (
+                  <p
+                    style={{
+                      color: '#dc2626',
+                      fontSize: 14,
+                      margin: '12px 0 0',
+                      padding: '10px 14px',
+                      background: '#fef2f2',
+                      borderRadius: 8,
+                    }}
+                  >
+                    {errorMessage}
+                  </p>
+                )}
+
+                <div style={F.nav}>
+                  <button style={F.btnSec} onClick={() => setStep(3)}>
+                    ← Voltar
+                  </button>
+                  <button
+                    style={{ ...F.btn, opacity: !mealScenario || status === 'submitting' ? 0.6 : 1 }}
+                    disabled={!mealScenario || status === 'submitting'}
+                    onClick={handleSubmit}
+                  >
+                    {status === 'submitting' ? 'Enviando…' : 'Registrar interesse'}
+                  </button>
+                </div>
+              </section>
+            )}
+          </div>
         </div>
       </main>
     </div>
@@ -344,7 +393,7 @@ const F = {
     marginBottom: 20,
     fontSize: 14,
     fontWeight: 600,
-    color: '#374151',
+    color: '#001d4d',
   },
   input: {
     padding: '10px 14px',
@@ -365,6 +414,7 @@ const F = {
     fontSize: 14,
     cursor: 'pointer',
     lineHeight: 1.5,
+    color: '#374151',
   },
   btn: {
     background: '#EB6B15',
@@ -376,15 +426,17 @@ const F = {
     fontSize: 15,
     fontWeight: 700,
     letterSpacing: 0.5,
+    boxShadow: '0 2px 12px rgba(235,107,21,0.3)',
   },
   btnSec: {
     background: 'transparent',
-    color: '#6b7280',
-    border: '1px solid #d1d5db',
+    color: '#003D8F',
+    border: '1px solid #c0d4f5',
     borderRadius: 8,
     padding: '12px 20px',
     cursor: 'pointer',
     fontSize: 14,
+    fontWeight: 500,
   },
   nav: { display: 'flex' as const, gap: 12, marginTop: 28, justifyContent: 'flex-end' as const },
 };

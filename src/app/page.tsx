@@ -328,6 +328,9 @@ export default function HomePage() {
             identificando falácias, aprofundando o conhecimento bíblico e saindo mais preparados para viver e
             testemunhar a fé no cotidiano.
           </p>
+          <div style={{ marginTop: 40, paddingTop: 36, borderTop: '1px solid #e5e7eb' }}>
+            <SectionCTA label="Quero participar da 2ª edição →" />
+          </div>
         </div>
       </section>
 
@@ -387,6 +390,9 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          <div style={{ marginTop: 40, paddingTop: 36, borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center' }}>
+            <SectionCTA label="Quero participar da 2ª edição →" dark />
+          </div>
         </div>
       </section>
 
@@ -445,6 +451,9 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          <div style={{ marginTop: 40, paddingTop: 36, borderTop: '1px solid #e5e7eb' }}>
+            <SectionCTA label="Registrar meu interesse →" />
+          </div>
         </div>
       </section>
 
@@ -470,10 +479,10 @@ export default function HomePage() {
               <br />
               <span style={{ color: '#EB6B15' }}>A 2ª vai ser ainda maior.</span>
             </h2>
-            <p style={{ fontSize: 16, color: '#7290BA', margin: '0 auto', maxWidth: 560, lineHeight: 1.7 }}>
-              No ano passado fizemos um dia inteiro falando sobre{' '}
-              <strong style={{ color: '#FACAA5' }}>Desmascarando Ideologias</strong>. Ficou gravado — de graça, no
-              YouTube. Cada turno tem a live completa e as partes separadas.
+            <p style={{ fontSize: 16, color: '#7290BA', margin: '0 auto', maxWidth: 600, lineHeight: 1.7 }}>
+              Na primeira edição passamos um dia inteiro abordando{' '}
+              <strong style={{ color: '#FACAA5' }}>cosmovisão cristã, saúde emocional, organização pessoal, finanças, vocação secular e vocação ministerial</strong>.
+              {' '}Ficou tudo gravado — de graça, no YouTube. Cada turno tem a live completa e as partes separadas.
             </p>
           </div>
 
@@ -575,6 +584,13 @@ export default function HomePage() {
               Ver todos os vídeos da 1ª edição →
             </a>
           </div>
+
+          <div style={{ marginTop: 48, paddingTop: 40, borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center' }}>
+            <p style={{ fontSize: 14, color: '#7290BA', margin: '0 0 16px' }}>
+              Quer fazer parte da próxima edição?
+            </p>
+            <SectionCTA label="Fazer meu pré-cadastro →" dark />
+          </div>
         </div>
       </section>
 
@@ -660,6 +676,28 @@ export default function HomePage() {
         </p>
       </footer>
     </div>
+  );
+}
+
+function SectionCTA({ label, dark = false }: { label: string; dark?: boolean }) {
+  return (
+    <Link
+      href="/pre-cadastro"
+      style={{
+        display: 'inline-block',
+        background: '#EB6B15',
+        color: '#fff',
+        textDecoration: 'none',
+        borderRadius: 10,
+        padding: '14px 32px',
+        fontSize: 15,
+        fontWeight: 700,
+        letterSpacing: 0.3,
+        boxShadow: dark ? '0 4px 20px rgba(235,107,21,0.4)' : '0 4px 16px rgba(235,107,21,0.25)',
+      }}
+    >
+      {label}
+    </Link>
   );
 }
 
