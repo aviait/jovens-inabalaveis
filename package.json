@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.0.0",
+    "exceljs": "^4.4.0",
     "iron-session": "^8.0.4",
     "next": "^15.0.0",
     "react": "^19.0.0",

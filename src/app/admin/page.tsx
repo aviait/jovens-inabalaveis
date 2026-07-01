@@ -348,6 +348,22 @@ export default async function AdminPage({
             >
               {total}
             </span>
+            <a
+              href="/api/admin/export"
+              style={{
+                fontSize: 12,
+                fontWeight: 600,
+                color: '#166534',
+                background: '#f0fdf4',
+                border: '1px solid #bbf7d0',
+                borderRadius: 8,
+                padding: '5px 12px',
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              ↓ Exportar Excel
+            </a>
           </div>
 
           {total === 0 ? (
