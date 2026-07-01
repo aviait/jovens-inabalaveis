@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { db } from '@/lib/db';
 import { MEAL_SCENARIO_LABELS, type MEAL_SCENARIOS } from '@/lib/schemas';
 import { getSession } from '@/lib/session';
@@ -23,11 +24,13 @@ function BarChart({
   items,
   subtitle,
   accentFirst = false,
+  verTodosHref,
 }: {
   title: string;
   subtitle?: string;
   items: Array<{ label: string; count: number }>;
   accentFirst?: boolean;
+  verTodosHref?: string;
 }) {
   const max = items[0]?.count ?? 1;
   return (
@@ -43,6 +46,11 @@ function BarChart({
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 20 }}>
         <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#111', flex: 1 }}>{title}</h2>
         {subtitle && <span style={{ fontSize: 12, color: '#9ca3af' }}>{subtitle}</span>}
+        {verTodosHref && (
+          <Link href={verTodosHref} style={{ fontSize: 12, color: '#003D8F', textDecoration: 'none', fontWeight: 600, flexShrink: 0 }}>
+            Ver todos →
+          </Link>
+        )}
       </div>
       {items.length === 0 ? (
         <p style={{ color: '#9ca3af', fontSize: 14, margin: 0 }}>Nenhum dado ainda.</p>
@@ -241,6 +249,7 @@ export default async function AdminPage() {
             subtitle={`${allTopics.length} voto${allTopics.length !== 1 ? 's' : ''}`}
             items={top6Topics}
             accentFirst
+            verTodosHref="/admin/ranking?tipo=temas"
           />
           <BarChart
             title="Preferência por turno"
@@ -256,6 +265,7 @@ export default async function AdminPage() {
             subtitle={`${submissions.length} cadastro${submissions.length !== 1 ? 's' : ''} no total`}
             items={churchRanking}
             accentFirst
+            verTodosHref="/admin/ranking?tipo=congregacoes"
           />
         </div>
 
@@ -309,7 +319,7 @@ export default async function AdminPage() {
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                 <thead>
                   <tr style={{ background: '#f9fafb' }}>
-                    {['#', 'Nome', 'Nascimento', 'Igreja', 'Temas', 'Turnos', 'Refeição', 'Data'].map(
+                    {['#', 'Nome', 'Nascimento', 'Igreja', 'Temas', 'Turnos', 'Refeição', 'Data', ''].map(
                       (h) => (
                         <th
                           key={h}
@@ -394,6 +404,14 @@ export default async function AdminPage() {
                       </td>
                       <td style={{ ...td, whiteSpace: 'nowrap', color: '#9ca3af', fontSize: 11 }}>
                         {s.createdAt.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
+                      </td>
+                      <td style={{ ...td, whiteSpace: 'nowrap' }}>
+                        <Link
+                          href={`/admin/submission/${s.id}`}
+                          style={{ fontSize: 12, color: '#003D8F', textDecoration: 'none', fontWeight: 600 }}
+                        >
+                          Ver →
+                        </Link>
                       </td>
                     </tr>
                   ))}
